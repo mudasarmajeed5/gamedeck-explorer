@@ -1,101 +1,53 @@
-import Image from "next/image";
-
+"use client";
+import ImageSlider from "./components/ImageSlider";
+import { useState, useEffect } from "react";
+import { FaHeart, FaUser } from "react-icons/fa";
+import { GoSearch } from "react-icons/go";
+import GameCard from "./components/GameCard";
 export default function Home() {
+  const [fetchedData, setfetchedData] = useState([]);
+  const [homeData, setHomeData] = useState([]);
+  useEffect(() => {
+    const getSliderData = async () => {
+      const apiKey = "7630e5ccdda1425fae5bbdcf199a727c";
+      let response = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&limit=20`)
+      if (!response.ok) {
+        throw new Error("Failed to fetch Data!");
+      }
+      const receivedData = await response.json();
+      setHomeData(receivedData.results.slice(7,20));
+      setfetchedData(receivedData.results.slice(0, 5));
+    }
+    getSliderData();
+  }, [])
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <>
+      <div className="md:w-[85vw] w-full min-h-screen">
+        <div className="flex justify-between md:justify-center items-center p-1 gap-2">
+          <div className="w-full px-3 md:w-[60%] flex gap-4 py-1 items-center">
+            <input placeholder="Search your Game here!" name="searchGame" className="text-white rounded-xl w-full px-2 py-1 bg-transparent border-white border-opacity-10 focus:outline-none border" type="text" />
+            <button className="text-xl text-white"><GoSearch /></button>
+          </div>
+          <div className="hidden md:flex w-[20%] gap-4 justify-center items-center text-xl text-white">
+            <FaUser />
+            <FaHeart />
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <div className="bg-opacity-70">
+          <div className="slider w-screen h-[30vh] md:h-[70vh] md:w-[60vw] py-2 mx-auto">
+            <ImageSlider slides={fetchedData} />
+          </div>
+        </div>
+        <div className="my-5"></div>
+        <section>
+          <h2 className="text-white text-2xl mx-4">Trending Games</h2>
+          <div className="justify-start mx-auto w-4/5 space-x-4 space-y-4 items-center flex flex-wrap text-white">
+            {homeData.map((item,idx)=>(
+                <GameCard key={idx} gameData={item}/>
+            ))}
+          </div>
+        </section>
+      </div>
+    </>
   );
 }
