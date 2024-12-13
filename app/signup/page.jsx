@@ -28,11 +28,11 @@ const Signup = () => {
       )
     }
     return (
-        // haziq will design this page, with options like login with google, facebook, github, and manually entering a password and email to register. also Add icons and keep the text-white in the body. 
+        // design the login page here!!!
       <div>
         Not signed in <br />
         <button className="text-white border rounded-md px-5 py-2 hover:bg-white hover:bg-opacity-40" onClick={() => signIn("github")}>Sign in with github</button>
-        <button className="text-white border rounded-md px-5 py-2 hover:bg-white hover:bg-opacity-40" onClick={() => signIn()}>Sign in with google</button>
+        <button className="text-white login border rounded-md px-5 py-2 hover:bg-white hover:bg-opacity-40" onClick={() => signIn("google")}>Sign in with google</button>
       </div>
     )  
 }

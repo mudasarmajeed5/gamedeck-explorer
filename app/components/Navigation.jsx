@@ -1,14 +1,14 @@
 "use client";
 import { FaHome, FaUser } from "react-icons/fa";
 import Link from "next/link";
-import { MdLibraryAddCheck } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
 import { FaStore } from "react-icons/fa";
 import { FaWallet } from "react-icons/fa6";
+import { signOut,signIn, useSession } from "next-auth/react";
 import { FaRegUserCircle } from "react-icons/fa";
-import { useSession } from "next-auth/react";
+import { CiLogout } from "react-icons/ci";
 const Navigation = () => {
-    const {data:session} = useSession();
+    const { data: session } = useSession();
     return (
         <>
             <nav className="hidden md:flex border-transparent border border-r-white min-w-fit justify-between sticky top-0 h-screen flex-col bg-black bg-opacity-60 p-4 pr-6 text-white">
@@ -21,11 +21,6 @@ const Navigation = () => {
                             <Link href={"/"}>
                                 <li className="flex gap-2 items-center hover:bg-gray-300 hover:bg-opacity-25 px-2 py-1 rounded-md cursor-pointer transition-all">
                                     <FaHome /><span>Home</span>
-                                </li>
-                            </Link>
-                            <Link href={"/library"}>
-                                <li className="flex gap-2 items-center hover:bg-gray-300 hover:bg-opacity-25 px-2 py-1 rounded-md cursor-pointer transition-all">
-                                    <MdLibraryAddCheck /><span>Library</span>
                                 </li>
                             </Link>
                             <Link href={"/favorites"}>
@@ -44,11 +39,16 @@ const Navigation = () => {
                         </ul>
                     </div>
                 </div>
-                <div className="signIn text-md border-b-2 bg-gray-600 bg-opacity-35 hover:bg-opacity-55 px-2 py-1 cursor-pointer transition-all flex gap-2 items-center">
-                     {session? <img src={session.user.image} width={30} className="rounded-full" alt="" />: <FaRegUserCircle />} {session? <Link href={`/${session.user.email.split("@")[0]}/updateprofile`}>{session.user.name.split(" ")[0]}</Link>:<Link href={"/signup"}>Sign In</Link>}
+                <div
+                    onClick={session ? () => signOut() : () => signIn()}
+                    className="signIn text-md border-b-2 bg-gray-600 bg-opacity-35 hover:bg-opacity-55 px-2 py-1 cursor-pointer transition-all flex gap-2 items-center"
+                >
+                    {session ? <CiLogout /> : <FaRegUserCircle />} {/* Icon changes dynamically */}
+                    <span>{session ? 'Logout' : 'Log in'}</span>
                 </div>
+
             </nav>
-            <div className="flex md:hidden fixed p-2 w-screen bottom-0 text-xl bg-white bg-opacity-60 text-black list-none justify-between items-center">
+            <div className="flex z-[50] md:hidden fixed p-2 w-screen bottom-0 text-md bg-white text-black list-none justify-between items-center">
                 <Link className="flex flex-col justify-center items-center gap-1" href="/">
                     <FaHome />
                     <span className="text-xs">Home</span>
@@ -65,7 +65,10 @@ const Navigation = () => {
                     <FaWallet />
                     <span className="text-xs">Wallet</span>
                 </Link>
-                <Link className="flex flex-col justify-center items-center gap-1" href="/account">
+                <Link
+                    className="flex flex-col justify-center items-center gap-1"
+                    href={`/${session ? `editprofile/${session.user.email.split("@")[0]}` : 'signup'}`}
+                >
                     <FaUser />
                     <span className="text-xs">Account</span>
                 </Link>
