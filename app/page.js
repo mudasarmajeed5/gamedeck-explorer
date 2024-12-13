@@ -25,7 +25,7 @@ export default function Home() {
       <div className="md:w-[85vw] w-full min-h-screen">
         <div className="flex justify-between md:justify-center items-center p-1 gap-2">
           <div className="w-full px-3 md:w-[60%] flex gap-4 py-1 items-center">
-            <input placeholder="Search your Game here!" name="searchGame" className="text-white rounded-xl w-full px-2 py-1 bg-transparent border-white border-opacity-10 focus:outline-none border" type="text" />
+            <input placeholder="Search your Game here!" name="searchGame" className="text-white rounded-xl w-full px-2 py-1 bg-white bg-opacity-10 border-white border-opacity-10  focus:outline-none border" type="text" />
             <button className="text-xl text-white"><GoSearch /></button>
           </div>
           <div className="hidden md:flex w-[20%] gap-4 justify-center items-center text-xl text-white">
@@ -38,7 +38,7 @@ export default function Home() {
             <ImageSlider slides={fetchedData} />
           </div>
         </div>
-        <div className="my-5"></div>
+        <div className="my-16"></div>
         <section>
           <h2 className="text-white text-2xl mx-4">Trending Games</h2>
           <div className="justify-start mx-auto w-4/5 space-x-4 space-y-4 items-center flex flex-wrap text-white">

@@ -7,12 +7,11 @@ import { FaStore } from "react-icons/fa";
 import { FaWallet } from "react-icons/fa6";
 import { FaRegUserCircle } from "react-icons/fa";
 import { useSession } from "next-auth/react";
-
 const Navigation = () => {
     const {data:session} = useSession();
     return (
         <>
-            <nav className="hidden md:flex min-w-fit justify-between sticky top-0 h-screen flex-col bg-black bg-opacity-60 p-4 pr-6 text-white">
+            <nav className="hidden md:flex border-transparent border border-r-white min-w-fit justify-between sticky top-0 h-screen flex-col bg-black bg-opacity-60 p-4 pr-6 text-white">
                 <div>
                     <div className="logo font-bold text-2xl py-4 border-b-2">
                         Game Deck
@@ -46,7 +45,7 @@ const Navigation = () => {
                     </div>
                 </div>
                 <div className="signIn text-md border-b-2 bg-gray-600 bg-opacity-35 hover:bg-opacity-55 px-2 py-1 cursor-pointer transition-all flex gap-2 items-center">
-                     {session? <img src={session.user.image} width={30} className="rounded-full" alt="" />: <FaRegUserCircle />} {session? <>{session.user.name.split(" ")[0]}</>:<Link href={"/signup"}>Sign In</Link>}
+                     {session? <img src={session.user.image} width={30} className="rounded-full" alt="" />: <FaRegUserCircle />} {session? <Link href={`/${session.user.email.split("@")[0]}/updateprofile`}>{session.user.name.split(" ")[0]}</Link>:<Link href={"/signup"}>Sign In</Link>}
                 </div>
             </nav>
             <div className="flex md:hidden fixed p-2 w-screen bottom-0 text-xl bg-white bg-opacity-60 text-black list-none justify-between items-center">

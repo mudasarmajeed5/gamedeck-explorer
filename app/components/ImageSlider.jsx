@@ -8,33 +8,16 @@ if (typeof window !== "undefined") {
 }
 const ImageSlider = ({ slides }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-
-    // UseEffect for auto-play
     useEffect(() => {
-        if (slides.length === 0) return; // Prevent unnecessary effects
+        if (slides.length === 0) return;
         const intervalId = setInterval(() => {
             setCurrentIndex((prevIndex) =>
                 prevIndex === slides.length - 1 ? 0 : prevIndex + 1
             );
-        }, 3000);
+        }, 5000);
+
         return () => clearInterval(intervalId);
     }, [slides]);
-
-    // UseEffect for background styling
-    useEffect(() => {
-        if (slides.length === 0) return; // Prevent unnecessary effects
-        document.body.style.backgroundImage = `url(${slides[currentIndex]?.background_image})`;
-        document.body.style.backgroundSize = 'cover';
-        document.body.style.backgroundPosition = 'center';
-        document.body.style.backgroundRepeat = 'no-repeat';
-        return () => {
-            document.body.style.backgroundImage = '';
-            document.body.style.backgroundSize = '';
-            document.body.style.backgroundPosition = '';
-            document.body.style.backgroundRepeat = '';
-        };
-    }, [currentIndex, slides]);
-
     if (slides.length === 0) {
         return (
             <div className="flex min-h-screen justify-center items-center">
@@ -71,6 +54,8 @@ const ImageSlider = ({ slides }) => {
         backgroundPosition: 'center',
         borderRadius: '10px',
         backgroundSize: 'cover',
+        display: 'flex',
+        transition: 'all 0.5s ease-in-out',
     };
 
     const sliderStyles = {
@@ -122,19 +107,35 @@ const ImageSlider = ({ slides }) => {
                 <div style={rightArrowStyles} onClick={goToNext}>
                     <FaArrowRight />
                 </div>
-                <div className="flex items-center justify-center">
-                    {slides.map((_, slideIndex) => (
-                        <div
-                            className={`my-0 mx-[3px] cursor-pointer text-xl ${
-                                slideIndex === currentIndex
-                                    ? "text-white"
+                <div className="absolute w-full text-black bottom-0 flex items-center justify-between">
+                    <div className="bg-yellow-400 font-bold text-black hover:bg-black cursor-pointer hover:text-white transition-colors duration-300 bg-opacity-85 px-2 py-1">{slides[currentIndex].name}</div>
+                    <div className="flex justify-start items-end flex-col gap-2">
+                    <div className="bg-black text-white px-2 py-1">Tags</div>
+                    <div className="flex justify-end gap-2 flex-wrap">
+                        {slides[currentIndex]?.tags.slice(5, 8).map((tag, index) => (
+                            <span key={index} className="bg-white bg-opacity-60 cursor-pointer hover:bg-opacity-100 text-black text-xs px-2 py-1">
+                                {tag.name}
+                            </span>
+                        ))}
+                    </div>
+                    </div>
+
+
+                </div>
+                <div className="flex my-4 items-center justify-center">
+                    {slides.map((item, slideIndex) => (
+                        <div key={slideIndex}>
+                            <div
+                                className={`my-0 mx-[3px] cursor-pointer text-xl ${slideIndex === currentIndex
+                                    ? "border-2 border-white"
                                     : "text-gray-400"
-                            }`}
-                            onClick={() => goToSlide(slideIndex)}
-                            key={slideIndex}
-                        >
-                            ●
+                                    }`}
+                                onClick={() => goToSlide(slideIndex)}
+                            >
+                                <img src={item.background_image} width={100} height={35} alt="" />
+                            </div>
                         </div>
+
                     ))}
                 </div>
             </div>
