@@ -1,5 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
+import "./editprofile.css"
 const UpdateProfile = () => {
   const path = usePathname(); 
   //get the username from the URL

@@ -26,7 +26,7 @@ export default function Home() {
     <>
       <div className="md:w-[85vw] w-full min-h-screen">
         <div className="flex bg-white bg-opacity-10 justify-between md:justify-center items-center p-1 gap-2">
-          <div className="text-white text-center w-full font-bold p-2">GameDeck -- Your Favorite Store</div>
+          <div className="text-white text-xl mx-2 w-full font-semibold">The Best Platform for you</div>
           <div className="hidden md:flex w-[20%] gap-4 justify-end items-end text-xl text-white">
           <div className="signIn text-sm border-b-2 bg-gray-600 bg-opacity-35 hover:bg-opacity-55 px-4 py-1 cursor-pointer transition-all flex gap-2 items-center">
             {session ? (

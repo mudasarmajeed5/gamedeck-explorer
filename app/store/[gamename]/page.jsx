@@ -4,7 +4,10 @@ import { waveform } from "ldrs";
 import GameSlider from "./component/GameSlider";
 import Link from "next/link";
 import { FaHeart } from "react-icons/fa";
+import { toast } from "sonner";
 const GameName = () => {
+  const [favoritesData, setFavoritesData] = useState([]);
+
   const [currentGameData, setCurrentGameData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [screenShotsData, setscreenShotsData] = useState(null);
@@ -12,12 +15,48 @@ const GameName = () => {
     'bg-red-500', 'bg-yellow-500', 'bg-green-500', 'bg-blue-500', 'bg-indigo-500',
     'bg-purple-500', 'bg-pink-500', 'bg-teal-500', 'bg-orange-500', 'bg-lime-500'
   ];
-  
+  const [addRemoveState, setaddRemoveState] = useState("Add");
+  const handleAddtoFavorites = () => {
+    const data = {
+      Name: currentGameData.name,
+      Link: `http://localhost:3000/store/${currentGameData.id}`,
+      image: currentGameData.background_image,
+    };
+
+    setFavoritesData((prevGameData) => {
+      let updatedGamesData;
+      let message;
+      const isFavorite = prevGameData.some((game) => game.Name === data.Name);
+      if (isFavorite) {
+        updatedGamesData = prevGameData.filter((game) => game.Name !== data.Name);
+        message = "Removed from Favorites";
+        setaddRemoveState("Add");
+      } else {
+        updatedGamesData = [...prevGameData, data];
+        message = "Added to Favorites";
+        setaddRemoveState("Remove");
+      }
+      localStorage.setItem("favoriteGames", JSON.stringify(updatedGamesData));
+      toast.success(message);
+      return updatedGamesData;
+    });
+
+  };
+
   const getRandomColor = () => {
     const randomIndex = Math.floor(Math.random() * colors.length);
     return colors[randomIndex];
   };
-  
+  useEffect(() => {
+    // This will run whenever `currentGameData` is updated
+    if (currentGameData && currentGameData.name) {
+      const storedFavorites = localStorage.getItem("favoriteGames");
+      const favorites = storedFavorites ? JSON.parse(storedFavorites) : [];
+
+      const isFavorite = favorites.some((game) => game.Name === currentGameData.name);
+      setaddRemoveState(isFavorite ? "Remove" : "Add");
+    }
+  }, [currentGameData]);
   useEffect(() => {
     if (typeof window !== "undefined") {
       waveform.register();
@@ -42,7 +81,16 @@ const GameName = () => {
         setLoading(false);
       }
     };
-
+    
+    let fetchedData = localStorage.getItem("favoriteGames");
+    if (fetchedData) {
+      let parsedData = JSON.parse(fetchedData);
+      setFavoritesData(parsedData);
+    }
+    else {
+      console.log("Failed to parse favorites from localStorage:");
+      setFavoritesData([]);
+    }
     fetchById();
   }, []);
   if (loading) {
@@ -62,7 +110,7 @@ const GameName = () => {
     <section className="min-h-screen w-[100vw] md:w-[85vw] text-white">
       <div className="my-10"><GameSlider sliderData={screenShotsData} /></div>
       <div className="p-5 flex flex-col gap-4">
-        <div className="text-2xl flex justify-between font-semibold"><span>{currentGameData.name}</span><span className="flex items-center gap-2 text-xl px-2 py-1 bg-blue-600 cursor-pointer"><FaHeart/><span>Add to Favorites</span></span></div>
+        <div className="text-2xl flex justify-between font-semibold"><span>{currentGameData.name}</span><span onClick={() => handleAddtoFavorites()} className="flex items-center gap-2 text-[14px] px-2 py-1 bg-blue-600 cursor-pointer"><FaHeart /><span>{addRemoveState} to Favorites</span></span></div>
         <div className="flex justify-between flex-col md:flex-row">
           <div className="w-4/5 mx-auto">Description: {currentGameData.description_raw}</div>
           <div className="flex flex-col justify-center items-start w-[230px] my-5 gap-4">
