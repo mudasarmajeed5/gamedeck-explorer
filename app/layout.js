@@ -29,6 +29,7 @@ export default function RootLayout({ children }) {
           <div>
             {children}
           </div>
+          <div className="my-10"></div>
         </SessionWrapper>
       </body>
     </html>

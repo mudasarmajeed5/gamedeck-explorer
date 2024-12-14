@@ -59,3 +59,27 @@ html {
 .gameTagButtons:hover {
     text-underline-offset: 4px;
 }
+
+.slider-container {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: all 0.5s ease-in-out;
+    width: 70vw;
+    height: 70vh;
+  }
+  
+  @media (max-width: 768px) {
+    .slider-container {
+      width: 90vw;
+      height: 50vh;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .slider-container {
+      width: 100vw;
+      height: 30vh;
+    }
+  }
+  
