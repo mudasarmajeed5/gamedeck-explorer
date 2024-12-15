@@ -18,8 +18,9 @@ const GameName = () => {
   const [addRemoveState, setaddRemoveState] = useState("Add");
   const handleAddtoFavorites = () => {
     const data = {
+      id:currentGameData.id,
       Name: currentGameData.name,
-      Link: `http://localhost:3000/store/${currentGameData.id}`,
+      Link: `https://gamedeck-explorer.vercel.app/store/${currentGameData.id}`,
       image: currentGameData.background_image,
     };
 
@@ -113,7 +114,7 @@ const GameName = () => {
         <div className="text-2xl flex justify-between font-semibold"><span>{currentGameData.name}</span><span onClick={() => handleAddtoFavorites()} className="flex items-center gap-2 text-[14px] px-2 py-1 bg-blue-600 cursor-pointer"><FaHeart /><span>{addRemoveState} to Favorites</span></span></div>
         <div className="flex justify-between flex-col md:flex-row">
           <div className="w-4/5 mx-auto">Description: {currentGameData.description_raw}</div>
-          <div className="flex flex-col justify-center items-start w-[230px] my-5 gap-4">
+          <div className="flex flex-col justify-center items-end w-[230px] my-5 gap-4">
             {currentGameData && currentGameData.metacritic_platforms.map((item, idx) => (
               <Link key={idx} target="_blank" href={item.url}><span className="px-2 py-1 text-md w-full bg-white text-black" ><span className="font-semibold">{item.platform.name}</span> Score: {item.metascore}</span></Link>
             ))}
