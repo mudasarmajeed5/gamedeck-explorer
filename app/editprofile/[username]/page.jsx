@@ -1,13 +1,17 @@
 "use client";
 import { usePathname } from "next/navigation";
-import "./editprofile.css"
+import { useSession } from "next-auth/react";
+import "./editprofile.css";
 const UpdateProfile = () => {
-  const path = usePathname(); 
+  const {data:session} = useSession();
+  const path = usePathname();
   //get the username from the URL
   let username = path.split("/")[2];
 
   return (
-    <div className='text-white min-h-screen'>UpdateProfile for username: {username}</div>
+    <>
+      <div className='text-white min-h-screen'>UpdateProfile for username: {username}</div>
+    </>
   )
 }
 

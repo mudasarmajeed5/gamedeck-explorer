@@ -2,11 +2,9 @@ import { NextResponse } from "next/server";
 import connectDB from "@/app/Database/mongodb";
 import User from "@/app/Models/User";
 export async function POST(request) {
+    await connectDB();
     const email = request.headers.get('email');
-
-    // Parse the body of the request
     const favoritesData = await request.json();
-    console.log(favoritesData);
     try {
         const data = await User.findOneAndUpdate(
             { email },
