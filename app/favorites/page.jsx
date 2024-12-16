@@ -80,33 +80,33 @@ const Favorites = () => {
       <div className="orange">
         <h1>Favorites</h1>
       </div>
-      <div className='searchtag flex items-center justify-center md:justify-between'>
-        <form action="" method='get'>
+      <div className='searchtag flex items-center justify-between px-4 md:px-10 md:justify-between'>
+        <form className='w-4/6' action="" method='get'>
           <input type="text" className='bg-transparent md:w-full border px-2 py-1 text-white rounded-md' id='search' name='search' placeholder='Search your favorites here' />
         </form>
-        <div className='sort'>
-          <label htmlFor="sort">Sort by:</label>
-          <select className='px-2 py-1 bg-transparent text-white border' name="sort" id="sort">
+        <label className='text-white' htmlFor="sort">Sort</label>
+        <div className='sort w-2/6'>
+          <select className='px-2 py-1 rounded-md ml-2 bg-transparent text-white border' name="sort" id="sort">
             <option className='text-black' value="Alphabetical">Alphabetical</option>
             <option className='text-black' value="ReleaseDate">Release Date</option>
             <option className='text-black' value="MostRated">Most Rated</option>
           </select>
         </div>
       </div>
-
+      <div className="my-10"></div>
       <div className="renderFavorites w-[100vw] text-white space-y-4 md:w-[85vw]">
         {favoritesData.length == 0 && <div className='text-2xl min-h-[50vh] gap-5 flex justify-center items-center'>No Games in Favorites, Browse store <Link className='bg-white px-2 py-1 text-black rounded-sm' href={"/store"}>Store</Link></div>}
         {favoritesData && favoritesData.map((item, idx) => (
 
-          <div key={idx} className='flex p-3 shadow-md border border-red-500 shadow-red-950 bg-gray-900 rounded-md bg-opacity-65 m-2 mx-auto md:w-4/5 justify-between'>
-            <div className='flex flex-col  gap-2'>
-              <span className='font-semibold text-xl text-white'>{item.Name}</span>
-              <div className='flex flex-col items-start justify-start gap-4'>
-                <Link className='bg-white text-sm text-black px-2 py-1 rounded-md' href={item.Link}>Open Game In Library</Link>
-                <button onClick={() => handleRemoveItem(item)} className='bg-red-600 text-sm text-white px-2 py-1 rounded-md'>Remove from Favorites</button>
+          <div key={idx} className='flex p-3 shadow-md border border-red-500 shadow-red-950 bg-gray-900 rounded-md bg-opacity-65 m-2 mx-auto w-11/12 md:w-4/5 justify-between'>
+            <div className='flex flex-col justify-between gap-2'>
+              <span className='font-semibold text-sm md:text-xl text-white'>{item.Name}</span>
+              <div className='flex flex-col items-start gap-2'>
+                <Link className='text-xs md:text-md bg-white text-black px-2 py-1 rounded-md' href={item.Link}>Open Game In Library</Link>
+                <button onClick={() => handleRemoveItem(item)} className='text-xs md:text-md bg-red-600 text-white px-2 py-1 rounded-md'>Remove from Favorites</button>
               </div>
             </div>
-            <div><img src={item.image} className='w-[200px] object-cover object-center h-[130px]' alt="" /></div>
+            <div><img src={item.image} className='w-[160px] md:w-[200px] object-cover object-center h-[100px] md:h-[130px]' alt="" /></div>
           </div>
         ))}
       </div>

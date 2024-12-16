@@ -4,10 +4,31 @@ import Link from "next/link";
 import { FaHeart } from "react-icons/fa";
 import { FaStore } from "react-icons/fa";
 import { FaWallet } from "react-icons/fa6";
-import { signOut,signIn, useSession } from "next-auth/react";
+import { signOut, signIn, useSession } from "next-auth/react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 const Navigation = () => {
+    const path = usePathname();
+    const pathname = path.split("/")[1];
+    const navLinks = [
+        {
+            name: "Favorites",
+            icon: <FaHeart />,
+            link:"/favorites"
+        },
+        {
+            name: "Store",
+            icon: <FaStore />,
+            link:"/store"
+        },
+        {
+            name: "Wallet",
+            icon: <FaWallet />,
+            link:"/wallet"
+        }
+    ]
     const { data: session } = useSession();
     return (
         <>
@@ -23,19 +44,13 @@ const Navigation = () => {
                                     <FaHome /><span>Home</span>
                                 </li>
                             </Link>
-                            <Link href={"/favorites"}>
-                                <li className="flex gap-2 items-center hover:bg-gray-300 hover:bg-opacity-25 px-2 py-1 rounded-md cursor-pointer transition-all">
-                                    <FaHeart /><span>Favorites</span>
-                                </li>
-                            </Link>
-                            <Link href={"/store"}><li className="flex gap-2 items-center hover:bg-gray-300 hover:bg-opacity-25 px-2 py-1 rounded-md cursor-pointer transition-all">
-                                <FaStore /><span>Store</span>
-                            </li>
-                            </Link>
-                            <Link href={"/wallet"}><li className="flex gap-2 items-center hover:bg-gray-300 hover:bg-opacity-25 px-2 py-1 rounded-md cursor-pointer transition-all">
-                                <FaWallet /><span>Wallet</span>
-                            </li>
-                            </Link>
+                            {navLinks.map((navItem, idx) => (
+                                <Link key={idx} href={`${navItem.link}`} className={`${navItem.name.toLowerCase() === pathname? 'bg-gray-300 bg-opacity-25':''}`}>
+                                    <li className={`flex gap-2 items-center px-2 py-1 rounded-md cursor-pointer`}>
+                                        {navItem.icon}<span>{navItem.name}</span>
+                                    </li>
+                                </Link>
+                            ))}
                         </ul>
                     </div>
                 </div>
@@ -48,7 +63,7 @@ const Navigation = () => {
                 </div>
 
             </nav>
-            <div className="flex z-[50] md:hidden fixed p-2 w-screen bottom-0 text-md bg-white text-black list-none justify-between items-center">
+            <nav className="flex z-[50] md:hidden fixed p-2 w-screen bottom-0 text-md bg-white text-black list-none justify-around items-center">
                 <Link className="flex flex-col justify-center items-center gap-1" href="/">
                     <FaHome />
                     <span className="text-xs">Home</span>
@@ -72,7 +87,7 @@ const Navigation = () => {
                     <FaUser />
                     <span className="text-xs">Account</span>
                 </Link>
-            </div>
+            </nav>
 
         </>
 

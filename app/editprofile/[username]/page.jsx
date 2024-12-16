@@ -10,7 +10,10 @@ const UpdateProfile = () => {
 
   return (
     <>
-      <div className='text-white min-h-screen'>UpdateProfile for username: {username}</div>
+      <div className='text-white min-h-screen'>
+        UpdateProfile for username: {username}
+        
+      </div>
     </>
   )
 }
