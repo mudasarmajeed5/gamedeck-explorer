@@ -7,7 +7,6 @@ import { FaHeart } from "react-icons/fa";
 import { toast } from "sonner";
 const GameName = () => {
   const [favoritesData, setFavoritesData] = useState([]);
-
   const [currentGameData, setCurrentGameData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [screenShotsData, setscreenShotsData] = useState(null);
@@ -111,7 +110,7 @@ const GameName = () => {
     <section className="min-h-screen w-[100vw] md:w-[85vw] text-white">
       <div className="my-10"><GameSlider sliderData={screenShotsData} /></div>
       <div className="p-5 flex flex-col gap-4">
-        <div className="text-2xl flex justify-between font-semibold"><span>{currentGameData.name}</span><span onClick={() => handleAddtoFavorites()} className="flex items-center gap-2 text-[14px] px-2 py-1 bg-blue-600 cursor-pointer"><FaHeart /><span>{addRemoveState} to Favorites</span></span></div>
+        <div className="text-2xl flex justify-between font-semibold"><span>{currentGameData.name}</span><span onClick={() => handleAddtoFavorites()} className="flex items-center gap-2 text-[11px] px-2 py-1 bg-blue-600 cursor-pointer"><FaHeart /><span>{addRemoveState} to Favorites</span></span></div>
         <div className="flex justify-between flex-col md:flex-row">
           <div className="w-4/5 mx-auto">Description: {currentGameData.description_raw}</div>
           <div className="flex flex-col justify-center items-end w-[230px] my-5 gap-4">

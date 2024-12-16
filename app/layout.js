@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
         <SessionWrapper>
           <Navigation />
           <Toaster/>
-          <div>
+          <div className="md:w-[85vw] w-full">
             {children}
           </div>
           <div className="my-10"></div>

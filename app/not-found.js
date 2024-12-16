@@ -5,10 +5,10 @@ export default function NotFound() {
         <div className="bg-black text-white min-h-screen md:w-[85vw] flex flex-col gap-8 justify-center items-center text-center px-4">
             <div className="space-y-4">
                 <h1 className="text-5xl font-bold text-red-600">404</h1>
-                <p className="text-2xl font-semibold">Oops! Game Over</p>
+                <p className="text-2xl font-semibold">Oops! Page not found!</p>
                 <p className="text-gray-300 max-w-md mx-auto">
-                    The page you're looking for seems to have escaped the game map. 
-                    Let's help you get back to the main menu.
+                    The page youre looking for seems to have escaped from our database, or youre on the wrong page!. 
+                    Lets help you get back to the main menu.
                 </p>
             </div>
             
