@@ -28,33 +28,33 @@ export default function Home() {
         <div className="flex bg-white bg-opacity-10 justify-between md:justify-center items-center p-1 gap-2">
           <div className="text-white text-xl mx-2 w-full font-semibold">The Best Platform for you</div>
           <div className="hidden md:flex w-[20%] gap-4 justify-end items-end text-xl text-white">
-          <div className="signIn text-sm border-b-2 bg-gray-600 bg-opacity-35 hover:bg-opacity-55 px-4 py-1 cursor-pointer transition-all flex gap-2 items-center">
-            {session ? (
-              <>
-                <img
-                  src={session.user.image}
-                  width={30}
-                  className="rounded-full"
-                  alt="User Profile"
-                />
-                <Link
-                  className="flex flex-col justify-center items-center gap-1"
-                  href={`/editprofile/${session.user.email.split("@")[0]}`}
-                >
-                  Edit Profile
-                </Link>
-              </>
-            ) : (
-              <>
-                <FaRegUserCircle />
-                <Link
-                  className="flex flex-col justify-center items-center gap-1"
-                  href="/signup"
-                >
-                  Sign up
-                </Link>
-              </>
-            )}
+            <div className="signIn text-sm border-b-2 bg-gray-600 bg-opacity-35 hover:bg-opacity-55 px-4 py-1 cursor-pointer transition-all flex gap-2 items-center">
+              {session ? (
+                <>
+                  <img
+                    src={session.user.image}
+                    width={30}
+                    className="rounded-full"
+                    alt="User Profile"
+                  />
+                  <Link
+                    className="flex flex-col justify-center items-center gap-1"
+                    href={`/editprofile/${session.user.email.split("@")[0]}`}
+                  >
+                    Edit Profile
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <FaRegUserCircle />
+                  <Link
+                    className="flex flex-col justify-center items-center gap-1"
+                    href="/signup"
+                  >
+                    Sign up
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -64,16 +64,17 @@ export default function Home() {
           </div>
         </div>
         <div className="my-16"></div>
-        <section>
-          <h2 className="text-white text-2xl mx-4">Trending Games</h2>
-          <div className="justify-start mx-auto w-4/5 space-x-4 space-y-4 items-center flex flex-wrap text-white">
+        <h2 className="text-white text-2xl mx-4">Trending Games</h2>
+        <section className="flex justify-center items-center text-white py-4">
+          <div className="grid grid-cols-1 w-4/5 md:w-auto md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
             {homeData.map((item, idx) => (
               <GameCard key={idx} gameData={item} />
             ))}
           </div>
         </section>
+
       </div>
-      
+
     </>
   );
 }

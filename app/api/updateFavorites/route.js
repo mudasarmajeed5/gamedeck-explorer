@@ -20,3 +20,21 @@ export async function POST(request) {
 
     return NextResponse.json({ status: 200, message: "Request sent successfully!" });
 }
+export async function GET(request){
+    const email = request.headers.get('email');
+    await connectDB();
+    try {
+        let data = await User.findOne({email:email});
+        return NextResponse.json({
+            status:200,
+            data:data.favorites,
+            message:"Data fetched successfully!",
+        })
+    } catch (error) {
+        console.log('Error fetching data',error);
+    }
+    return NextResponse.json({
+        status:400,
+        message:"Error fetching data!",
+    })
+}

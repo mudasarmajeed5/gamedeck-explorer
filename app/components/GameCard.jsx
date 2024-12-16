@@ -5,11 +5,11 @@ const GameCard = ({ gameData }) => {
 
   return (
     <>
-      <div className="flex hover:cursor-pointer md:w-[280px] md:h-[250px] flex-col bg-white bg-opacity-20 hover:bg-opacity-35 transition-transform justify-between transform hover:scale-105 duration-300 p-2 rounded-md marginFix">
+      <div className="flex hover:cursor-pointer md:w-[280px] md:h-[250px] flex-col bg-white bg-opacity-20 hover:bg-opacity-35 transition-transform justify-between transform hover:scale-105 duration-300 p-2 rounded-md">
         <Link href={`/store/${gameData.id}`}><div className="flex-1">
           <img
             src={gameData.background_image}
-            className="object-cover object-center w-full h-[160px]"
+            className="object-cover rounded-md object-center w-full h-[160px]"
             alt=""
           />
         </div>

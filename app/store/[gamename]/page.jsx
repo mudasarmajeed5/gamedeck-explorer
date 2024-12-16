@@ -139,7 +139,7 @@ const GameName = () => {
           {/* Tags */}
           <div>
             <h3 className="text-xl font-semibold mb-2">Tags:</h3>
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap md:w-3/4">
               {currentGameData.tags.slice(0, 10).map((tag, idx) => (
                 <span
                   key={idx}

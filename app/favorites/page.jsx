@@ -8,11 +8,11 @@ const Favorites = () => {
   const { data: session } = useSession();
   const [favoritesData, setFavoritesData] = useState([]);
   const updateLocalstorage = (updatedFavoritesArray) => {
-    localStorage.setItem("favoriteGames",JSON.stringify(updatedFavoritesArray))
+    localStorage.setItem("favoriteGames", JSON.stringify(updatedFavoritesArray))
   }
-  
+
   const handleRemoveItem = (item) => {
-    const updatedFavoritesArray = favoritesData.filter((game)=>game.id !== item.id);
+    const updatedFavoritesArray = favoritesData.filter((game) => game.id !== item.id);
     setFavoritesData(updatedFavoritesArray);
     toast.success("Game Removed from List");
     // update local storage of games. 
@@ -26,6 +26,26 @@ const Favorites = () => {
       setFavoritesData([]);
     }
   }, []);
+  useEffect(() => {
+    const fetchFromDatabase = async (email) => {
+      try {
+        let response = await fetch("/api/updateFavorites", {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'email': email,
+          }
+        })
+        const { data } = await response.json();
+        setFavoritesData(data);
+      } catch (error) {
+        console.log('Error fetching Data: ', error);
+      }
+    }
+    if (session && session.user) {
+      fetchFromDatabase(session.user.email);
+    }
+  }, [session])
   useEffect(() => {
     const sendToDatabase = async () => {
       try {
@@ -54,30 +74,26 @@ const Favorites = () => {
       sendToDatabase();
     }
   }, [favoritesData])
-  // write your 
-  // https://ncjw5pj3-3000.euw.devtunnels.ms/favorites   || open this link to view your page.
-  // write code here.
+
   return (
     <section className='favorites'>
       <div className="orange">
         <h1>Favorites</h1>
       </div>
-      <div className='searchtag flex justify-between items-center'>
+      <div className='searchtag flex items-center justify-center md:justify-between'>
         <form action="" method='get'>
-          <input type="text" className='bg-transparent w-full border px-3 py-1  text-white rounded-md m-3' id='search' name='search' placeholder='Search your favorites here' />
+          <input type="text" className='bg-transparent md:w-full border px-2 py-1 text-white rounded-md' id='search' name='search' placeholder='Search your favorites here' />
         </form>
         <div className='sort'>
-        <form action="">
           <label htmlFor="sort">Sort by:</label>
-          <select className='bg-transparent text-white border px-4 py-1' name="sort" id="sort">
+          <select className='px-2 py-1 bg-transparent text-white border' name="sort" id="sort">
             <option className='text-black' value="Alphabetical">Alphabetical</option>
             <option className='text-black' value="ReleaseDate">Release Date</option>
             <option className='text-black' value="MostRated">Most Rated</option>
           </select>
-        </form>
+        </div>
       </div>
-      </div>
-      
+
       <div className="renderFavorites w-[100vw] text-white space-y-4 md:w-[85vw]">
         {favoritesData.length == 0 && <div className='text-2xl min-h-[50vh] gap-5 flex justify-center items-center'>No Games in Favorites, Browse store <Link className='bg-white px-2 py-1 text-black rounded-sm' href={"/store"}>Store</Link></div>}
         {favoritesData && favoritesData.map((item, idx) => (
@@ -87,7 +103,7 @@ const Favorites = () => {
               <span className='font-semibold text-xl text-white'>{item.Name}</span>
               <div className='flex flex-col items-start justify-start gap-4'>
                 <Link className='bg-white text-sm text-black px-2 py-1 rounded-md' href={item.Link}>Open Game In Library</Link>
-                <button onClick={()=>handleRemoveItem(item)} className='bg-red-600 text-sm text-white px-2 py-1 rounded-md'>Remove from Favorites</button>
+                <button onClick={() => handleRemoveItem(item)} className='bg-red-600 text-sm text-white px-2 py-1 rounded-md'>Remove from Favorites</button>
               </div>
             </div>
             <div><img src={item.image} className='w-[200px] object-cover object-center h-[130px]' alt="" /></div>
