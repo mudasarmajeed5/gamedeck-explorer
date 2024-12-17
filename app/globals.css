@@ -13,6 +13,9 @@ html {
     height: 10px;
     /* Adjust height for horizontal scrollbar */
 }
+body{
+  
+}
 
 ::-webkit-scrollbar-track {
     background: #1a1a1a;
