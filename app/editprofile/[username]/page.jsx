@@ -50,8 +50,9 @@ const UpdateProfile = () => {
             <button className="px-2 py-1 rounded-md mt-2 bg-blue-700">Update Profile</button>
           </div>
           <div className="right flex items-center flex-col gap-4">
-            <img className="border-2 border-white rounded-full" width={150} height={150} src={session?.user.image || ''} alt={session?.user?.name} />
+            <img className="border-2 border-white rounded-full" width={150} height={150} src={session?.user.image} alt={session?.user?.name} />
             <div className="flex gap-4">
+            <button className="px-2 py-1 rounded-md bg-red-300">Delete Account</button>
             <button className="px-2 py-1 rounded-md bg-red-700">Delete Account</button>
             <button className="px-2 py-1 text-black rounded-md bg-white">Logout</button>
             </div>
