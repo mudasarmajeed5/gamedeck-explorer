@@ -15,7 +15,6 @@ const Favorites = () => {
     const updatedFavoritesArray = favoritesData.filter((game) => game.id !== item.id);
     setFavoritesData(updatedFavoritesArray);
     toast.success("Game Removed from List");
-    // update local storage of games. 
     updateLocalstorage(updatedFavoritesArray);
   }
   useEffect(() => {
@@ -26,6 +25,7 @@ const Favorites = () => {
       setFavoritesData([]);
     }
   }, []);
+  // fetch from database
   useEffect(() => {
     const fetchFromDatabase = async (email) => {
       try {
@@ -38,6 +38,7 @@ const Favorites = () => {
         })
         const { data } = await response.json();
         setFavoritesData(data);
+
       } catch (error) {
         console.log('Error fetching Data: ', error);
       }
@@ -46,6 +47,7 @@ const Favorites = () => {
       fetchFromDatabase(session.user.email);
     }
   }, [session])
+  // send to database
   useEffect(() => {
     const sendToDatabase = async () => {
       try {
@@ -70,7 +72,7 @@ const Favorites = () => {
         console.log('Error sending request: ', error);
       }
     }
-    if (session && favoritesData) {
+    if (session) {
       sendToDatabase();
     }
   }, [favoritesData])
@@ -95,14 +97,14 @@ const Favorites = () => {
       </div>
       <div className="my-10"></div>
       <div className="renderFavorites w-[100vw] text-white space-y-4 md:w-[85vw]">
-        {favoritesData.length == 0 && <div className='text-2xl min-h-[50vh] gap-5 flex justify-center items-center'>No Games in Favorites, Browse store <Link className='bg-white px-2 py-1 text-black rounded-sm' href={"/store"}>Store</Link></div>}
+        {favoritesData?.length == 0 && <div className='text-2xl min-h-[50vh] gap-5 flex justify-center items-center'>No Games in Favorites, Browse store <Link className='bg-white px-2 py-1 text-black rounded-sm' href={"/store"}>Store</Link></div>}
         {favoritesData && favoritesData.map((item, idx) => (
 
-          <div key={idx} className='flex p-3 shadow-md border border-red-500 shadow-red-950 bg-gray-900 rounded-md bg-opacity-65 m-2 mx-auto w-11/12 md:w-4/5 justify-between'>
+          <div key={idx} className='flex p-3 shadow-md hover:shadow-2xl border border-red-500 shadow-red-950 bg-gray-900 rounded-md bg-opacity-35 m-2 mx-auto w-11/12 md:w-4/5 justify-between'>
             <div className='flex flex-col justify-between gap-2'>
               <span className='font-semibold text-sm md:text-xl text-white'>{item.Name}</span>
               <div className='flex flex-col items-start gap-2'>
-                <Link className='text-xs md:text-md bg-white text-black px-2 py-1 rounded-md' href={item.Link}>Open Game In Library</Link>
+                <Link className='text-xs md:text-md bg-white text-black px-2 py-1 rounded-md' href={item.Link}>Open Game In Store</Link>
                 <button onClick={() => handleRemoveItem(item)} className='text-xs md:text-md bg-red-600 text-white px-2 py-1 rounded-md'>Remove from Favorites</button>
               </div>
             </div>

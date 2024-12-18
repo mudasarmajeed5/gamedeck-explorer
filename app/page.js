@@ -24,7 +24,7 @@ export default function Home() {
   }, [])
   return (
     <>
-      <div className="md:w-[85vw] w-full min-h-screen">
+      <div className="md:w-[85vw] min-h-screen">
         <div className="flex bg-white bg-opacity-10 justify-between md:justify-center items-center p-1 gap-2">
           <div className="text-white text-xl mx-2 w-full font-semibold">The Best Platform for you</div>
           <div className="hidden md:flex w-[20%] gap-4 justify-end items-end text-xl text-white">
@@ -66,7 +66,7 @@ export default function Home() {
         <div className="my-16"></div>
         <h2 className="text-white text-2xl mx-4">Trending Games</h2>
         <section className="flex justify-center items-center text-white py-4">
-          <div className="grid grid-cols-1 w-4/5 md:w-auto md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 w-[100vw] place-items-center md:w-4/5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
             {homeData.map((item, idx) => (
               <GameCard key={idx} gameData={item} />
             ))}

@@ -1,5 +1,6 @@
 "use client";
 import React from 'react'
+import Tilt from "react-parallax-tilt"
 import { useState, useEffect } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { waveform } from 'ldrs';

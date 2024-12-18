@@ -32,7 +32,7 @@ const Navigation = () => {
     const { data: session } = useSession();
     return (
         <>
-            <nav className="hidden md:flex border-transparent border border-r-white min-w-fit justify-between sticky top-0 h-screen flex-col bg-black bg-opacity-60 p-4 pr-6 text-white">
+            <nav className="hidden md:flex border-transparent border border-r-white min-w-fit justify-between sticky top-0 h-screen flex-col bg-black bg-opacity-20 p-4 pr-6 text-white">
                 <div>
                     <div className="logo font-bold text-2xl py-4 border-b-2">
                         Game Deck
