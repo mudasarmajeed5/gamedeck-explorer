@@ -4,10 +4,13 @@ import "./favoritesStyles.css";
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
+import { FaSpinner } from 'react-icons/fa';
 const Favorites = () => {
   const { data: session } = useSession();
+  const [fetchingFromDatabase, setFetchingFromDatabase] = useState(false);
   const [favoritesData, setFavoritesData] = useState([]);
   const updateLocalstorage = (updatedFavoritesArray) => {
+    console.log(updatedFavoritesArray);
     localStorage.setItem("favoriteGames", JSON.stringify(updatedFavoritesArray))
   }
 
@@ -22,31 +25,33 @@ const Favorites = () => {
     if (data) {
       setFavoritesData(JSON.parse(data));
     } else {
+      localStorage.setItem("favoriteGames", JSON.stringify([])); // Set as empty array if not found
       setFavoritesData([]);
     }
   }, []);
   // fetch from database
-  useEffect(() => {
-    const fetchFromDatabase = async (email) => {
-      try {
-        let response = await fetch("/api/updateFavorites", {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'email': email,
-          }
-        })
-        const { data } = await response.json();
-        setFavoritesData(data);
-
-      } catch (error) {
-        console.log('Error fetching Data: ', error);
-      }
+  const fetchFromDatabase = async (email) => {
+    if (!email) {
+      alert("Not signed In");
+      return;
+    };
+    try {
+      setFetchingFromDatabase(true);
+      let response = await fetch("/api/updateFavorites", {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'email': email,
+        }
+      })
+      const { data } = await response.json();
+      setFavoritesData(data);
+      updateLocalstorage(data);
+      setFetchingFromDatabase(false);
+    } catch (error) {
+      console.log('Error fetching Data: ', error);
     }
-    if (session && session.user) {
-      fetchFromDatabase(session.user.email);
-    }
-  }, [session])
+  }
   // send to database
   useEffect(() => {
     const sendToDatabase = async () => {
@@ -82,10 +87,11 @@ const Favorites = () => {
       <div className="orange">
         <h1>Favorites</h1>
       </div>
-      <div className='searchtag flex items-center justify-between px-4 md:px-10 md:justify-between'>
+      <div className='searchtag flex gap-2 items-center justify-between px-4 md:px-10 md:justify-between'>
         <form className='w-4/6' action="" method='get'>
           <input type="text" className='bg-transparent md:w-full border px-2 py-1 text-white rounded-md' id='search' name='search' placeholder='Search your favorites here' />
         </form>
+
         <label className='text-white' htmlFor="sort">Sort</label>
         <div className='sort w-2/6'>
           <select className='px-2 py-1 rounded-md ml-2 bg-transparent text-white border' name="sort" id="sort">
@@ -93,6 +99,10 @@ const Favorites = () => {
             <option className='text-black' value="ReleaseDate">Release Date</option>
             <option className='text-black' value="MostRated">Most Rated</option>
           </select>
+        </div>
+        <div className="flex items-center gap-2">
+          <button onClick={() => fetchFromDatabase(session.user.email)} className='px-2 py-1 bg-gray-300'>Refresh</button>
+          <span className={`text-xl animate-spin text-white ${fetchingFromDatabase ? 'inline':'hidden'}`}><FaSpinner/></span>
         </div>
       </div>
       <div className="my-10"></div>
