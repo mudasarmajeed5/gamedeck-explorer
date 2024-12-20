@@ -54,7 +54,7 @@ const UpdateProfile = () => {
                 className="border border-white rounded-full pointer-events-none" // Disable interaction with the image
                 width={150}
                 height={150}
-                src={session?.user?.image || ''}
+                src={session?.user?.image || null}
                 alt={session?.user?.name || "User"}
               />
             </div>

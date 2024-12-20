@@ -12,8 +12,7 @@ const Favorites = () => {
   const updateLocalstorage = (updatedFavoritesArray) => {
     console.log(updatedFavoritesArray);
     localStorage.setItem("favoriteGames", JSON.stringify(updatedFavoritesArray))
-  }
-
+  };
   const handleRemoveItem = (item) => {
     const updatedFavoritesArray = favoritesData.filter((game) => game.id !== item.id);
     setFavoritesData(updatedFavoritesArray);
@@ -25,13 +24,13 @@ const Favorites = () => {
     if (data) {
       setFavoritesData(JSON.parse(data));
     } else {
-      localStorage.setItem("favoriteGames", JSON.stringify([])); // Set as empty array if not found
+      localStorage.setItem("favoriteGames", JSON.stringify([]));
       setFavoritesData([]);
     }
   }, []);
   // fetch from database
   const fetchFromDatabase = async (email) => {
-    if (!email) {
+    if (!session) {
       alert("Not signed In");
       return;
     };
@@ -87,27 +86,27 @@ const Favorites = () => {
       <div className="orange">
         <h1>Favorites</h1>
       </div>
-      <div className='searchtag flex gap-2 items-center justify-between px-4 md:px-10 md:justify-between'>
+      <div className='searchtag flex flex-wrap gap-2 items-center justify-between px-4 md:px-10 md:justify-between'>
         <form className='w-4/6' action="" method='get'>
           <input type="text" className='bg-transparent md:w-full border px-2 py-1 text-white rounded-md' id='search' name='search' placeholder='Search your favorites here' />
         </form>
 
-        <label className='text-white' htmlFor="sort">Sort</label>
+        <label className='text-white ' htmlFor="sort">Sort</label>
         <div className='sort w-2/6'>
-          <select className='px-2 py-1 rounded-md ml-2 bg-transparent text-white border' name="sort" id="sort">
-            <option className='text-black' value="Alphabetical">Alphabetical</option>
+          <select className='px-2 py-1 rounded-md md:ml-2 bg-transparent text-white border' name="sort" id="sort">
+            <option className='text-black ' value="Alphabetical">Alphabetical</option>
             <option className='text-black' value="ReleaseDate">Release Date</option>
             <option className='text-black' value="MostRated">Most Rated</option>
           </select>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={() => fetchFromDatabase(session.user.email)} className='px-2 py-1 bg-gray-300'>Refresh</button>
+          <button onClick={() => fetchFromDatabase(session?.user?.email)} className='px-2 py-1 bg-gray-300'>Refresh</button>
           <span className={`text-xl animate-spin text-white ${fetchingFromDatabase ? 'inline':'hidden'}`}><FaSpinner/></span>
         </div>
       </div>
       <div className="my-10"></div>
       <div className="renderFavorites w-[100vw] text-white space-y-4 md:w-[85vw]">
-        {favoritesData?.length == 0 && <div className='text-2xl min-h-[50vh] gap-5 flex justify-center items-center'>No Games in Favorites, Browse store <Link className='bg-white px-2 py-1 text-black rounded-sm' href={"/store"}>Store</Link></div>}
+        {favoritesData?.length == 0 && <div className='text-lg md:text-2xl min-h-[50vh] gap-5 flex flex-col justify-center items-center'>No Games in Favorites, Browse store <Link className='bg-white text-sm rounded-md px-2 py-1 text-black border hover:text-white hover:border-white hover:bg-transparent' href={"/store"}>Open Store</Link></div>}
         {favoritesData && favoritesData.map((item, idx) => (
 
           <div key={idx} className='flex p-3 shadow-md hover:shadow-2xl border border-red-500 shadow-red-950 bg-gray-900 rounded-md bg-opacity-35 m-2 mx-auto w-11/12 md:w-4/5 justify-between'>

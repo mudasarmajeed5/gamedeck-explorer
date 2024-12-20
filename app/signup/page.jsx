@@ -9,7 +9,7 @@ const Signup = () => {
     const { data: session,status } = useSession();
     if (status=="loading"){
       return (
-        <div className="flex w-[85vw] min-h-screen justify-center items-center">
+        <div className="flex w-screen md:w-[85vw] min-h-screen justify-center items-center">
             <l-waveform
                 size="35"
                 stroke="3.5"
@@ -28,7 +28,7 @@ const Signup = () => {
       )
     }
     return (
-        // design the login page here!!!
+        // design the login page here!!! || Will be designed by Haziq!
       <div>
         Not signed in <br />
         <button className="text-white border rounded-md px-5 py-2 hover:bg-white hover:bg-opacity-40" onClick={() => signIn("github")}>Sign in with github</button>
