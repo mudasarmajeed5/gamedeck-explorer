@@ -1,6 +1,6 @@
----
 
 # Game Deck 🎮  
+
 **A Game Searching and Favorite Management Platform**  
 
 ## Purpose  
@@ -8,6 +8,7 @@ Game Deck is a web-based application designed to simplify the discovery and mana
 - **Search for games** with ease.  
 - **View detailed information** about each game.  
 - **Save favorite games** in a personalized list.  
+- **Sync Games on your Personalized Profile**
 
 The platform ensures a seamless experience with the following features:  
 - **User-friendly interface** for effortless navigation.  
@@ -15,8 +16,6 @@ The platform ensures a seamless experience with the following features:
 - **Efficient data storage** using MongoDB for fast retrieval and management of game data.  
 
 Built with **React**, Game Deck is scalable, responsive, and provides smooth interactions to its users.  
-
----
 
 ## Key Features  
 - **Game Search:** Instantly find games by name or genre.  
@@ -61,8 +60,8 @@ Ensure you have the following installed:
      cp .env.sample .env
      ```
    - Open the `.env` file and add the following credentials:
-     - **Rawg API Key**
-       - `5773afd254c846a699ffc9ec3cb8cedd` 
+     - **RAWG API KEY**
+       - `RAWG_API=5773afd254c846a699ffc9ec3cb8cedd` 
      - **GitHub OAuth:**  
        - `GITHUB_CLIENT_ID=<your_github_client_id>`
        - `GITHUB_CLIENT_SECRET=<your_github_client_secret>`
@@ -73,7 +72,7 @@ Ensure you have the following installed:
        - `MONGODB_URI=<your_mongodb_connection_string>`
        - `Default MongoDB URI is: mongodb://127.0.0.1:27017/gamedeck`
 
-4. **Run the Backend Server:**  
+4. **Run the Application:**  
    After setting up the environment variables, start the server with:
    ```bash
    npm run dev

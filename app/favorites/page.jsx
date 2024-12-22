@@ -29,6 +29,7 @@ const Favorites = () => {
   const handleRemoveItem = (item) => {
     const updatedFavoritesArray = favoritesData.filter((game) => game.id !== item.id);
     setFavoritesData(updatedFavoritesArray);
+    setsearchedData(updatedFavoritesArray);
     toast.success("Game Removed from List");
     updateLocalstorage(updatedFavoritesArray);
   }
