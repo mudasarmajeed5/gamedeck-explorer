@@ -8,11 +8,12 @@ h1 {
     justify-content: centre;
 
 }
+
 #searhtag {
     width: max-content;
 }
 .setbackgroundColor {
-    opacity: 0.08;
+    opacity: 0.2;
     position: absolute;
     left: 0;
     top: 0;

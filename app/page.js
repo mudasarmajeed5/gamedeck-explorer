@@ -26,8 +26,8 @@ export default function Home() {
     <>
       <div className="min-h-screen">
         <div className="mb-4"></div>
-        <div className="flex sticky top-2 z-[10] border rounded-xl px-2 bg-gradient-to-r from-white via-blue-500 justify-between md:justify-center items-center p-1 gap-2">
-          <div className="text-black text-xl rounded-full w-full font-semibold">The Best Platform for you</div>
+        <div className="sticky flex top-2 z-[10] border rounded-xl px-2 bg-gradient-to-r from-white via-blue-500 justify-between md:justify-center items-center p-1 gap-2">
+          <div className="text-black text-xl rounded-full w-full font-semibold">Game Deck</div>
           <div className="hidden md:flex min-w-fit gap-4 justify-end items-end text-xl text-black">
             <div className="signIn text-sm bg-gray-200 bg-opacity-15 rounded-xl px-2 py-1 cursor-pointer transition-all flex gap-2 items-center">
               {session ? (
@@ -49,7 +49,7 @@ export default function Home() {
                 <>
                   <FaRegUserCircle />
                   <Link
-                    className="flex flex-col justify-center items-center gap-1"
+                    className="flex flex-col justify-center items-center text-white gap-1"
                     href="/signup"
                   >
                     Sign up
@@ -61,7 +61,7 @@ export default function Home() {
         </div>
         <div className="mt-4"></div>
         <div className="bg-opacity-70">
-          <div className="slider w-screen h-[30vh] md:h-[70vh] md:w-[60vw] py-2 mx-auto">
+          <div className="slider w-[90vw] h-[30vh] md:h-[70vh] md:w-[60vw] py-2 mx-auto">
             <ImageSlider slides={fetchedData} />
           </div>
         </div>

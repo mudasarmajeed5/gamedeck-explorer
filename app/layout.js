@@ -28,12 +28,12 @@ export default function RootLayout({ children }) {
       >
         <SessionWrapper>
           <div className="flex w-full">
-            <div className="md:w-[15vw] w-full">
+            <div>
               <Navigation />
             </div>
             <div className="md:w-[85vw] w-full">
               <Toaster />
-              <div className="md:px-10 px-4">
+              <div>
                 {children}
               </div>
             </div>
