@@ -1,5 +1,5 @@
 h1 {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: white;
     text-align: left;
     padding: 20px;
@@ -10,4 +10,22 @@ h1 {
 }
 #searhtag {
     width: max-content;
+}
+.setbackgroundColor {
+    opacity: 0.08;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -10;
+    width: 100vw;
+    height: screen;
+    background-clip: border-box;
+    overflow-x: hidden;
+    transition: background-color 3s ease;
+}
+@media only screen and (max-width:767px){
+    .setbackgroundColor{
+        width:100vw;
+        margin-left: 0;
+    }
 }

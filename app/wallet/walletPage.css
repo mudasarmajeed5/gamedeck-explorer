@@ -1,0 +1,20 @@
+.header{
+    color: white;
+    background: linear-gradient(135deg, hsl(0, 0%, 12%), rgb(66, 66, 66));
+    text-align: center;
+}
+.header h2 {
+    font-size: 90px;
+}
+.dashboard {
+    color: white;
+    display: flex;
+    justify-content: stretch;
+    width: 1000px;
+}
+.box {
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px;
+    float: left;
+}

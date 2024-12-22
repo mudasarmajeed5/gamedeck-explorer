@@ -2,85 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-    scroll-behavior: smooth;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 /* scrollbar styles from chatgpt */
 /* Scrollbar Track */
 ::-webkit-scrollbar {
-    width: 10px;
-    /* Adjust width for vertical scrollbar */
-    height: 10px;
-    /* Adjust height for horizontal scrollbar */
-}
-body{
-  
+  width: 10px;
+  /* Adjust width for vertical scrollbar */
+  height: 10px;
+  /* Adjust height for horizontal scrollbar */
 }
 
 ::-webkit-scrollbar-track {
-    background: #1a1a1a;
-    /* Dark background to blend with the black page */
-    border-radius: 10px;
-    /* Smooth edges */
+  background: #1a1a1a;
+  /* Dark background to blend with the black page */
+  border-radius: 10px;
+  /* Smooth edges */
 }
 
 /* Scrollbar Thumb */
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(90deg, #4caf50, #2196f3);
-    /* Cool gradient */
-    border-radius: 10px;
-    border: 2px solid #1a1a1a;
-    /* Add border for contrast with the track */
+  background: linear-gradient(90deg, #4caf50, #2196f3);
+  /* Cool gradient */
+  border-radius: 10px;
+  border: 2px solid #1a1a1a;
+  /* Add border for contrast with the track */
 }
 
 /* Scrollbar Thumb on Hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(90deg, #76ff03, #00e5ff);
-    /* Brighter gradient on hover */
-    border-color: #333;
-    /* Slightly lighter border on hover */
+  background: linear-gradient(90deg, #76ff03, #00e5ff);
+  /* Brighter gradient on hover */
+  border-color: #333;
+  /* Slightly lighter border on hover */
 }
 
 /* Scrollbar Corner (for dual scrollbars) */
 ::-webkit-scrollbar-corner {
-    background: #000;
-    /* Matches the black background */
+  background: #000;
+  /* Matches the black background */
 }
 
 
 .gameTagButtons {
-    padding: 0.25rem 1rem;
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    transition: all 0.2s ease;
-    color: rgb(15, 1, 1);
-    cursor: pointer;
+  padding: 0.25rem 1rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: all 0.2s ease;
+  color: rgb(15, 1, 1);
+  cursor: pointer;
 }
 
 .gameTagButtons:hover {
-    text-underline-offset: 4px;
+  text-underline-offset: 4px;
 }
 
 .slider-container {
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    transition: all 0.5s ease-in-out;
-    width: 70vw;
-    height: 70vh;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: all 0.5s ease-in-out;
+  width: 70vw;
+  height: 70vh;
+}
+
+@media (max-width: 768px) {
+  .slider-container {
+    width: 90vw;
+    height: 50vh;
   }
-  
-  @media (max-width: 768px) {
-    .slider-container {
-      width: 90vw;
-      height: 50vh;
-    }
+}
+
+@media (max-width: 640px) {
+  .slider-container {
+    width: 100vw;
+    height: 30vh;
   }
-  
-  @media (max-width: 640px) {
-    .slider-container {
-      width: 100vw;
-      height: 30vh;
-    }
-  }
-  
+}

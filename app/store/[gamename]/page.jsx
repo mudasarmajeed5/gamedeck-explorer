@@ -107,7 +107,7 @@ const GameName = () => {
   }
 
   return (
-    <section className="min-h-screen w-[100vw] md:w-[85vw] text-white">
+    <section className="min-h-screen text-white">
       <div className="my-10"><GameSlider sliderData={screenShotsData} /></div>
       <div className="p-5 flex flex-col gap-4">
         <div className="text-2xl flex justify-between font-semibold"><span>{currentGameData.name}</span><span onClick={() => handleAddtoFavorites()} className={`flex items-center gap-2 text-[11px] px-2 py-1 ${addRemoveState === "Add"? 'bg-blue-600' : 'bg-red-600'} cursor-pointer transition-colors duration-300`}><FaHeart /><span>{addRemoveState} to Favorites</span></span></div>

@@ -23,13 +23,20 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} md:flex-row flex-col flex-wrap-reverse md:flex-nowrap bg-black flex antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} md:flex-row flex-col flex-wrap-reverse md:flex-nowrap bg-black flex antialiased m-0 p-0`}
+        style={{ minHeight: '100vh' }}
       >
         <SessionWrapper>
-          <Navigation />
-          <Toaster/>
-          <div className="md:w-[85vw] w-full">
-            {children}
+          <div className="flex w-full">
+            <div className="md:w-[15vw] w-full">
+              <Navigation />
+            </div>
+            <div className="md:w-[85vw] w-full">
+              <Toaster />
+              <div className="md:px-10 px-4">
+                {children}
+              </div>
+            </div>
           </div>
           <div className="my-10"></div>
         </SessionWrapper>
