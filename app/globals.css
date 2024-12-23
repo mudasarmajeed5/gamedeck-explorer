@@ -10,7 +10,8 @@
 
 body {
   overflow-x: hidden;
-  background-image: url('/gamedeck_backgroundImage2.jpg');
+  background-image: url('/gradient_red.png');
+  background-color: black;
   background-position: center;
   background-attachment: fixed;
   background-repeat: no-repeat;

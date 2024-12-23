@@ -1,7 +1,6 @@
 import Slider from "react-slick";
 import Link from "next/link";
 const Card = ({ slide }) => {
-  console.log(slide);
   return (
     <div className="min-w-sm mx-2 rounded-lg">
       <a href="#">

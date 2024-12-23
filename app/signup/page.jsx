@@ -37,7 +37,6 @@ const Signup = () => {
   return (
     // design the login page here!!! || Will not be designed by Haziq!
     <div className="Login">
-      <img className="signupbackground"/>
       <div className="signupbox">
         <h1 className="Heading">Signup</h1>
         <form >

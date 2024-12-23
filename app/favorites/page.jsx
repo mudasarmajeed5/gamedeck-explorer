@@ -115,19 +115,18 @@ const Favorites = () => {
       <div className="orange">
         <h1>Favorites</h1>
       </div>
-      <div className='searchtag flex flex-wrap gap-2 items-center justify-between md:px-10 md:justify-between'>
-        <form className='w-4/6' action="" method='get'>
+      <div className='searchtag flex flex-wrap gap-2 items-center justify-between md:px-10 md:justify-around'>
+        <form className='w-4/6 flex items-center gap-2' action="" method='get'>
           <input onChange={(e) => handleSearch(e)} value={searchTerm} type="text" className='bg-transparent md:w-full border px-2 py-1 text-white rounded-md' id='search' name='search' placeholder='Search your favorites here' />
+          <label className='text-white ' htmlFor="sort">Sort</label>
+          <div className='sort w-2/6'>
+            <select className='px-2 py-1 rounded-md md:ml-2 bg-transparent text-white border' name="sort" id="sort">
+              <option className='text-black ' value="Alphabetical">Alphabetical</option>
+              <option className='text-black' value="ReleaseDate">Release Date</option>
+              <option className='text-black' value="MostRated">Most Rated</option>
+            </select>
+          </div>
         </form>
-
-        <label className='text-white ' htmlFor="sort">Sort</label>
-        <div className='sort w-2/6'>
-          <select className='px-2 py-1 rounded-md md:ml-2 bg-transparent text-white border' name="sort" id="sort">
-            <option className='text-black ' value="Alphabetical">Alphabetical</option>
-            <option className='text-black' value="ReleaseDate">Release Date</option>
-            <option className='text-black' value="MostRated">Most Rated</option>
-          </select>
-        </div>
         <div className="flex items-center gap-2">
           <button onClick={() => fetchFromDatabase(session?.user?.email)} className='px-2 py-1 bg-gray-300 hover:bg-transparent rounded-md hover:border-white border-transparent border hover:text-white transition-colors duration-300'>Refresh</button>
           <span className={`text-xl animate-spin text-white ${fetchingFromDatabase ? 'inline' : 'hidden'}`}><FaSpinner /></span>

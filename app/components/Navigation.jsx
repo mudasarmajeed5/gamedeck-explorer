@@ -12,7 +12,6 @@ const Navigation = () => {
     const { data: session } = useSession();
     const path = usePathname();
     const pathname = path.split("/")[1];
-    console.log(pathname);
     const navLinks = [
         {
             name: "Favorites",
@@ -39,26 +38,26 @@ const Navigation = () => {
                     </div>
                     <div className="border-b-2">
                         <ul className="flex text-lg md:flex-col space-y-3 px-4 py-2">
-                            <Link href={"/"}>
+                            <Link className={`rounded-md ${pathname.length == 0? 'bg-gray-300 bg-opacity-25': ''}`} href={"/"}>
                                 <li className="flex gap-2 items-center hover:bg-gray-300 hover:bg-opacity-25 px-2 py-1 rounded-md cursor-pointer transition-all">
                                     <FaHome /><span>Home</span>
                                 </li>
                             </Link>
                             {navLinks.map((navItem, idx) => (
-                                <Link key={idx} href={`${navItem.link}`} className={`${navItem.name.toLowerCase() === pathname ? 'bg-gray-300 bg-opacity-25' : ''}`}>
-                                    <li className={`flex gap-2 items-center px-2 py-1 rounded-md cursor-pointer`}>
+                                <Link key={idx} href={`${navItem.link}`} className={`hover:bg-opacity-25 hover:bg-gray-300 rounded-md cursor-pointer transition-all ${navItem.name.toLowerCase() === pathname ? 'bg-gray-300 bg-opacity-25' : ''}`}>
+                                    <li className={`flex gap-2 items-center px-2 py-1 cursor-pointer`}>
                                         {navItem.icon}<span>{navItem.name}</span>
                                     </li>
                                 </Link>
                             ))}
-                            <Link
-                                className={`${pathname.startsWith('editprofile') ? 'bg-gray-300 bg-opacity-25' : ''}`}
+                            {session && <Link
+                                className={`rounded-md hover:bg-opacity-25 hover:bg-gray-300 ${pathname.startsWith('editprofile') ? 'bg-gray-300 bg-opacity-25' : ''}`}
                                 href={`/${session ? `editprofile/${session.user.email.split("@")[0]}` : 'signup'}`}
                             >
                                 <li className={`flex gap-2 items-center px-2 py-1 rounded-md cursor-pointer`}>
                                     <FaUser /><span className="text-[1rem]">{session ? 'Edit Profile' : 'Login'}</span>
-                                </li>   
-                            </Link>
+                                </li>
+                            </Link>}
                         </ul>
                     </div>
                 </div>
@@ -72,7 +71,7 @@ const Navigation = () => {
 
             </nav>
             <section className="flex z-[50] md:hidden fixed w-screen bottom-0 text-md bg-white text-black list-none justify-around items-center">
-                <Link className="flex flex-col justify-center items-center gap-1" href="/">
+                <Link className={`flex ${pathname.length == 0? 'bg-gray-300 bg-opacity-25': ''} flex-col justify-center items-center gap-1`} href="/">
                     <FaHome />
                     <span className="text-xs">Home</span>
                 </Link>

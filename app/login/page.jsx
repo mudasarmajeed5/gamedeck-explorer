@@ -1,5 +1,5 @@
 "use client";
-import "./style.css"
+import "../signup/style.css"
 import Link from "next/link";
 import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
@@ -37,7 +37,6 @@ const Login = () => {
   return (
     // design the login page here!!! || Will not be designed by Haziq!
     <div className="Login">
-      <img className="loginbackground"/>
       <div className="loginbox">
         <h1 className="Heading">Login</h1>
         <form >

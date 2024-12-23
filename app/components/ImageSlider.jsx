@@ -96,7 +96,7 @@ const ImageSlider = ({ slides }) => {
                     backgroundColor: 'rgb(0,0,0,0.4)',
                     height: '100vh',
                     width: '100vw',
-                    backdropFilter: 'blur(3px)',
+                    backdropFilter: 'blur(0px)',
                     zIndex: -5,
                 }}
             ></div>
