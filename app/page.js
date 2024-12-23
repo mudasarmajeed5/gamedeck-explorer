@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { FaRegUserCircle } from "react-icons/fa";
 import GameCard from "./components/GameCard";
+import MultiImageSlider from "./components/MultiImageSlider";
 export default function Home() {
   const { data: session } = useSession();
   const [fetchedData, setfetchedData] = useState([]);
@@ -26,7 +27,7 @@ export default function Home() {
     <>
       <div className="min-h-screen">
         <div className="mb-4"></div>
-        <div className="sticky flex top-2 z-[10] border rounded-xl px-2 bg-gradient-to-r from-white via-blue-500 justify-between md:justify-center items-center p-1 gap-2">
+        <div className="w-10/12 mx-auto flex top-2 z-[10] border rounded-xl px-2 bg-gradient-to-r from-white via-blue-500 justify-between md:justify-center items-center p-1 gap-2">
           <div className="text-black text-xl rounded-full w-full font-semibold">Game Deck</div>
           <div className="hidden md:flex min-w-fit gap-4 justify-end items-end text-xl text-black">
             <div className="signIn text-sm bg-gray-200 bg-opacity-15 rounded-xl px-2 py-1 cursor-pointer transition-all flex gap-2 items-center">
@@ -67,6 +68,7 @@ export default function Home() {
         </div>
         <div className="my-16"></div>
         <h2 className="text-white text-2xl mx-4">Trending Games</h2>
+        <MultiImageSlider slides={homeData}/>
         <section className="flex justify-center items-center text-white py-4">
           <div className="grid grid-cols-1 w-[100vw] place-items-center md:w-4/5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
             {homeData.map((item, idx) => (

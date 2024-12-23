@@ -138,7 +138,7 @@ const Favorites = () => {
         {favoritesData?.length == 0 && <div className='text-lg md:text-2xl min-h-[50vh] gap-5 flex flex-col justify-center items-center'>No Games in Favorites, Browse store <Link className='bg-white text-sm rounded-md px-2 py-1 text-black border hover:text-white hover:border-white hover:bg-transparent' href={"/store"}>Open Store</Link></div>}
         {searchedData && searchedData.map((item, idx) => (
 
-          <div key={idx} className='flex p-3 shadow-xl border border-red-500 shadow-red-950 bg-gray-900 rounded-md bg-opacity-35 mx-auto w-11/12 md:w-4/5 justify-between'>
+          <div key={idx} className='flex p-3 shadow border border-blue-700 shadow-blue-900 bg-gray-900 rounded-md bg-opacity-35 mx-auto w-11/12 md:w-4/5 justify-between'>
             <div className='flex flex-col justify-between gap-2'>
               <span className='font-semibold text-sm md:text-xl text-white'>{item.Name}</span>
               <div className='flex flex-col items-start gap-2'>

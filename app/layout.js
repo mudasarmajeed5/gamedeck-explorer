@@ -1,3 +1,5 @@
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 import Navigation from "./components/Navigation";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -23,7 +25,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} md:flex-row flex-col flex-wrap-reverse md:flex-nowrap bg-black flex antialiased m-0 p-0`}
+        className={`${geistSans.variable} ${geistMono.variable} md:flex-row flex-col flex-wrap-reverse md:flex-nowrap flex antialiased m-0 p-0`}
         style={{ minHeight: '100vh' }}
       >
         <SessionWrapper>

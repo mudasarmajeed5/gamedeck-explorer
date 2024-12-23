@@ -4,11 +4,11 @@ import Link from 'next/link';
 const GameCard = ({ gameData }) => {
   return (
     <>
-      <div className="flex hover:cursor-pointer w-[280px] md:h-[250px] flex-col bg-white bg-opacity-20 hover:bg-opacity-35 transition-transform justify-between transform hover:scale-105 duration-300 p-2 rounded-md">
+      <div className="flex hover:cursor-pointer w-[280px] md:h-[250px] flex-col bg-white shadow-gray-300 shadow bg-opacity-10 hover:bg-opacity-35 transition-transform border justify-between p-2 rounded-md">
         <Link href={`/store/${gameData.id}`}><div className="flex-1">
           <img
             src={gameData.background_image}
-            className="object-cover rounded-md object-center w-full h-[160px]"
+            className="object-cover hover:scale-105 transition-transform duration-300 rounded-md object-center w-full h-[160px]"
             alt=""
           />
         </div>

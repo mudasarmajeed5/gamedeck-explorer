@@ -9,7 +9,7 @@ if (typeof window !== "undefined") {
   // Ensure this runs only in the browser
   waveform.register();
 }
-const Signup = () => {
+const Login = () => {
   const { data: session, status } = useSession();
   if (status == "loading") {
     return (
@@ -37,25 +37,17 @@ const Signup = () => {
   return (
     // design the login page here!!! || Will not be designed by Haziq!
     <div className="Login">
-      <img className="signupbackground"/>
-      <div className="signupbox">
-        <h1 className="Heading">Signup</h1>
+      <img className="loginbackground"/>
+      <div className="loginbox">
+        <h1 className="Heading">Login</h1>
         <form >
           <div className="form">
             <label htmlFor="Username">Username: </label>
-            <input type="text" placeholder=" Create a username" />
+            <input type="text" placeholder=" Enter Your Username" />
           </div>
           <div className="form">
             <label htmlFor="Password">Password: </label>
-            <input type="text" placeholder=" Create a password" />
-          </div>
-          <div className="form">
-            <label htmlFor="Confirm">Confirm Password: </label>
-            <input type="text" placeholder=" Confirm your password" />
-          </div>
-          <div className="form">
-            <label htmlFor="Gmail">Email: </label>
-            <input type="email" placeholder=" Enter your email" />
+            <input type="password" placeholder=" Enter Your Password" />
           </div>
         </form>
         <div className="orline">
@@ -82,10 +74,10 @@ const Signup = () => {
           <h3>or</h3>
           <div className="Border2"></div>
         </div>
-        <h4 className="text-gray-500">Already Have an Account <Link className="text-white" href={"/login"}>Login!</Link> </h4>
+        <h4 className="text-gray-500">Dont Have an Account <Link className="text-white" href={"/signup"}>Signup!</Link> </h4>
       </div>
     </div>
   )
 }
 
-export default Signup
+export default Login
