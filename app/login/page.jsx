@@ -37,7 +37,7 @@ const Login = () => {
   return (
     // design the login page here!!! || Will not be designed by Haziq!
     <div className="Login">
-      <div className="loginbox">
+      <div className="loginbox bg-black bg-opacity-55 p-5 border-white border rounded-2xl">
         <h1 className="Heading">Login</h1>
         <form >
           <div className="form">

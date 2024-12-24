@@ -5,7 +5,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from 'sonner';
 import SessionWrapper from "./components/SessionWrapper";
-import Footer from "./components/Footer";
+import { Footer } from "./components/Footer";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",

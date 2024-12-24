@@ -5,14 +5,14 @@ const GameComponent = ({ gameData, reverseLayout }) => {
     return (
         <>
             <hr />
-            <section className="text-gray-400 bg-red-700 bg-opacity-35 body-font">
+            <section className="text-gray-400 bg-gray-900 bg-opacity-35 body-font">
                 <div
                     className="container mx-auto px-5 py-24 md:flex game-container"
                     style={{ flexDirection: flexDirection }}
                 >
                     <div className="lg:max-w-lg lg:w-full mx-auto md:w-1/2 w-11/12 md:mb-0 mb-10">
                         <img
-                            className="object-cover rounded-tr-3xl rounded-bl-3xl object-center shadow-lg shadow-yellow-500 scale-95"
+                            className="object-cover hover:-translate-x-1 hover:-translate-y-2 transition-all duration-300 rounded-tr-3xl rounded-bl-3xl object-center shadow-lg shadow-yellow-500 scale-95"
                             alt={gameData.name}
                             src={gameData.background_image}
                         />

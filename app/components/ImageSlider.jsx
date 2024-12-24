@@ -7,7 +7,7 @@ if (typeof window !== "undefined") {
     // Ensure this runs only in the browser
     waveform.register();
 }
-const ImageSlider = ({ slides }) => {
+const ImageSlider = ({ slides,blur,backgroundOpacity }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     useEffect(() => {
         if (slides.length === 0) return;
@@ -93,10 +93,10 @@ const ImageSlider = ({ slides }) => {
                     position: 'fixed',
                     top: 0,
                     left: 0,
-                    backgroundColor: 'rgb(0,0,0,0.4)',
+                    backgroundColor: `rgb(0,0,0,${backgroundOpacity/10})`,
                     height: '100vh',
                     width: '100vw',
-                    backdropFilter: 'blur(0px)',
+                    backdropFilter: `blur(${blur}px)`,
                     zIndex: -5,
                 }}
             ></div>

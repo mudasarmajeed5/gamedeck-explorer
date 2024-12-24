@@ -1,18 +1,25 @@
 "use client";
 import ImageSlider from "./components/ImageSlider";
-import { IoGameController } from "react-icons/io5";
+import { FaArrowUp } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { FaRegUserCircle } from "react-icons/fa";
 import GameCard from "./components/GameCard";
+import { TbBlur } from "react-icons/tb";
 import MultiImageSlider from "./components/MultiImageSlider";
 import GameComponent from "./components/HomeGameComp";
+import { CiBrightnessUp } from "react-icons/ci";
 export default function Home() {
   const { data: session } = useSession();
+  const [blur, setBlur] = useState(0);
+  const [backgroundOpacity, setbackgroundOpacity] = useState(0);
   const [fetchedData, setfetchedData] = useState([]);
   const [fetchedData2, setfetchedData2] = useState([]);
   const [homeData, setHomeData] = useState([]);
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  }
   useEffect(() => {
     const getSliderData = async () => {
       const apiKey = "5773afd254c846a699ffc9ec3cb8cedd";
@@ -31,15 +38,17 @@ export default function Home() {
     <>
       <div className="min-h-screen">
         <div className="mb-4"></div>
-        <div className="w-10/12 mx-auto flex top-2 z-[10] rounded-xl px-2 bg-red-700 text-white bg-opacity-55 justify-between md:justify-center items-center p-1 gap-2">
-          <div className="text-xl rounded-full w-full font-semibold">Game Deck</div>
+        <div className="w-11/12 md:w-10/12 mx-auto flex top-2 z-[10] rounded-xl px-2 bg-white bg-opacity-10 text-white border border-white border-opacity-10 justify-between md:justify-center items-center p-1 gap-2">
+          <div className="text-sm md:text-xl rounded-full w-full font-semibold">Game Deck: Your Personal Space</div>
           <div className="flex min-w-fit gap-4 justify-end items-end text-xl">
-            <div className="signIn text-sm bg-gray-200 bg-opacity-15 rounded-xl px-2 py-1 cursor-pointer transition-all flex gap-2 items-center">
+            <div className="signIn text-sm border border-white rounded-xl px-2 py-1 cursor-pointer transition-all flex gap-2 items-center">
               {session ? (
                 <>
                   <div>
-                    <Link className="flex text-white justify-center items-center gap-1"
-                      href={`/editprofile/${session.user.email.split("@")[0]}`}>
+                    <Link
+                      className="flex text-white justify-center items-center gap-1"
+                      href={`/editprofile/${session.user.email.split("@")[0]}`}
+                    >
                       <img
                         src={session.user.image}
                         width={30}
@@ -54,20 +63,32 @@ export default function Home() {
                 <>
                   <FaRegUserCircle />
                   <Link
-                    className="flex flex-col justify-center items-center text-white gap-1"
-                    href="/signup"
+                    className="flex flex-col justify-center items-center text-white  gap-1"
+                    href="/login"
                   >
-                    Sign up
+                    Login
                   </Link>
                 </>
               )}
             </div>
           </div>
         </div>
+
+
         <div className="mt-4"></div>
         <div className="bg-opacity-70">
           <div className="slider w-[90vw] h-[30vh] md:h-[70vh] md:w-[60vw] py-2 mx-auto">
-            <ImageSlider slides={fetchedData} />
+            <div className="text-white flex items-center mb-5 gap-2 justify-center">
+              <div className="flex justify-center items-center gap-2">
+                <TbBlur className="text-white"/>
+                <span>Background Blur </span><input onChange={(e) => setBlur(e.target.value)} min={0} defaultValue={blur} max={10} type="range" />
+              </div>
+              <div className="flex justify-center items-center gap-2">
+                <CiBrightnessUp/>
+                <span>OverLay Brightness </span><input onChange={(e) => setbackgroundOpacity(e.target.value)} min={0} defaultValue={blur} max={10} type="range" />
+              </div>
+            </div>
+            <ImageSlider slides={fetchedData} blur={blur} backgroundOpacity={backgroundOpacity} />
           </div>
         </div>
         <div className="md:my-8 my-2"></div>
@@ -139,6 +160,7 @@ export default function Home() {
             ))}
           </div>
         </section>
+        <FaArrowUp onClick={scrollToTop} className='text-3xl cursor-pointer text-white m-4 fixed bottom-0 right-0 hover:scale-105' />
       </div >
 
     </>

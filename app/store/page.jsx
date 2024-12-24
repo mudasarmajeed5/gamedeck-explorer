@@ -11,7 +11,7 @@ if (typeof window !== "undefined") {
     waveform.register();
 }
 const Store = () => {
-    const [enableCardTilt, setenableCardTilt] = useState(false);
+    const [enableCardTilt, setenableCardTilt] = useState(true);
     const [gamesData, setGamesData] = useState([]);
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(9);
