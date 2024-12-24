@@ -12,7 +12,7 @@ import GameComponent from "./components/HomeGameComp";
 import { CiBrightnessUp } from "react-icons/ci";
 export default function Home() {
   const { data: session } = useSession();
-  const [blur, setBlur] = useState(0);
+  const [blur, setBlur] = useState(3);
   const [backgroundOpacity, setbackgroundOpacity] = useState(0);
   const [fetchedData, setfetchedData] = useState([]);
   const [fetchedData2, setfetchedData2] = useState([]);
