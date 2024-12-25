@@ -6,8 +6,7 @@ const Wallet = () => {
     <>
   <header className="header">
     <div className="header-content">
-      <h1 className="wallet-title">My Wallet</h1>
-      <p className="wallet-slogan">Manage your funds, purchases, and transactions.</p>
+      <h1 className="wallet-title">Wallet: Your Trusted Hub for Gaming Transactions</h1>
     </div>
   </header>
 
@@ -24,32 +23,6 @@ const Wallet = () => {
         <li>Game Deposit - $50.00</li>
         <li>Subscription - $10.00</li>
       </ul>
-      <table className="transactions-table">
-        <thead>
-          <tr>
-            <th>Transaction Type</th>
-            <th>Amount</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Game Purchase</td>
-            <td>$40.00</td>
-            <td>2024-12-20</td>
-          </tr>
-          <tr>
-            <td>Game Deposit</td>
-            <td>$50.00</td>
-            <td>2024-12-18</td>
-          </tr>
-          <tr>
-            <td>Subscription</td>
-            <td>$10.00</td>
-            <td>2024-12-15</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
 
     <div className="add-funds">

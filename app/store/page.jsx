@@ -97,6 +97,7 @@ const Store = () => {
     }
     return (
         <section className='min-h-screen relative text-white'>
+            <div className="text-white bg-white my-5 text-xl font-bold px-2 py-1 w-4/5 md:w-10/12 bg-opacity-25 mx-auto rounded-xl">Store: Discover and Unlock New Adventures</div>
             <div className="w-[90%] flex mt-5 mx-auto px-3 gap-4 py-1 items-center">
                 <input value={searchTerm} onChange={(e) => setsearchTerm(e.target.value)} placeholder="Explore Games, Search Here!" name="searchGame" className="text-white rounded-xl w-full px-2 py-1 bg-white bg-opacity-10 border-white border-opacity-10  focus:outline-none border" type="text" />
                 <button onClick={handleSearch} className="flex gap-2 bg-white border border-transparent bg-opacity-25 hover:bg-black hover:border-white px-2 py-1 rounded-md items-center text-white"><span>Search</span><GoSearch /></button>

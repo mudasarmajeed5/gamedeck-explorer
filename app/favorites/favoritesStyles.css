@@ -24,9 +24,29 @@ h1 {
     overflow-x: hidden;
     transition: background-color 3s ease;
 }
+.orange {
+    background-color: rgba(255, 255, 255, 0.21);
+    width: 80%;
+    margin: 40px auto;
+    color: white;
+    border-radius: 10px;
+}
 @media only screen and (max-width:767px){
     .setbackgroundColor{
         width:100vw;
         margin-left: 0;
     }
+    .orange {
+        width: 91%;
+    }
 }
+.orange h1 {
+    padding: 3px 12px;
+    font-size: 20px;
+}
+
+/* Wallet
+"Wallet: Your Trusted Hub for Gaming Transactions"
+
+Store
+"Store: Discover and Unlock New Adventures" */

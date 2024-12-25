@@ -71,7 +71,7 @@ const Navigation = () => {
 
             </nav>
             <section className="flex z-[50] md:hidden fixed w-screen bottom-0 text-md bg-white text-black list-none justify-around items-center">
-                <Link className={`flex ${pathname.length == 0 ? 'bg-gray-300 bg-opacity-25' : ''} flex-col justify-center items-center gap-1`} href="/">
+                <Link className={`flex ${pathname.length == 0 ? 'text-red-600' : ''} flex-col justify-center items-center gap-1`} href="/">
                     <FaHome />
                     <span className="text-xs">Home</span>
                 </Link>

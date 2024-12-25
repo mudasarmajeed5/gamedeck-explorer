@@ -12,7 +12,7 @@ import GameComponent from "./components/HomeGameComp";
 import { CiBrightnessUp } from "react-icons/ci";
 export default function Home() {
   const { data: session } = useSession();
-  const [blur, setBlur] = useState(3);
+  const [blur, setBlur] = useState(0);
   const [backgroundOpacity, setbackgroundOpacity] = useState(0);
   const [fetchedData, setfetchedData] = useState([]);
   const [fetchedData2, setfetchedData2] = useState([]);
@@ -78,7 +78,7 @@ export default function Home() {
         <div className="mt-4"></div>
         <div className="bg-opacity-70">
           <div className="slider w-[90vw] h-[30vh] md:h-[70vh] md:w-[60vw] py-2 mx-auto">
-            <div className="text-white flex items-center mb-5 gap-2 justify-center">
+            <div className="text-white flex items-center flex-col md:flex-row hidden mb-5 gap-2 justify-center">
               <div className="flex justify-center items-center gap-2">
                 <TbBlur className="text-white"/>
                 <span>Background Blur </span><input onChange={(e) => setBlur(e.target.value)} min={0} defaultValue={blur} max={10} type="range" />

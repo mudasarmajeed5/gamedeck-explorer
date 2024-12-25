@@ -13,10 +13,8 @@ export const Footer = () => {
         <div className="footer-content">
         <div className="top ">    
             <div className="footer-image">
-            {/* <img src="/Dualshock 4.jpeg" alt="gaming" /> */}
-            <img className="img"  src="/logo/DualShock_4.jpg" alt="DualShock 4 Controller   " />
         </div>
-        <div className="footer-start flx">
+        <div className="footer-start relative z-[1] flx">
             <p>Your go-to platform for gaming reviews, prices, and recommendations.</p>
             <form className="btn relative z-[2]" action="">
                 <input type="email" placeholder="Your e-mail" />
@@ -25,7 +23,7 @@ export const Footer = () => {
         </div>
         </div>
         <div className="footer-sections text-center mx-auto">
-        <img src="/logo/logo.png" className="sepia brightness-0 invert" width={100} alt="" />
+        <img src="/logo/logo.png" className="sepia brightness-0 invert" width={150} alt="" />
         <div className="navigation">
             <h5>Navigation</h5>
             <div className="nav-items">
@@ -62,7 +60,7 @@ export const Footer = () => {
             </div>
         </div>
         </div>
-        <div className="footer-bottom">
+        <div className="footer-bottom m-4 p-2">
             <hr />
             <p className="copyright">Copyright&copy; 2024 Gamedeck-Explorer. All rights reserved.</p>
 
@@ -73,6 +71,7 @@ export const Footer = () => {
             <Link href="https://twitter.com"><FaTwitter /></Link>
             <Link href="https://discord.com"><FaDiscord /></Link>
         </div>
+        <hr />
         </div>
         </div>
         </div>
