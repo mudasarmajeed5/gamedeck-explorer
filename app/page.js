@@ -35,7 +35,8 @@ export default function Home() {
       setfetchedData2(receivedData.results.slice(14, 22));
     }
     getSliderData();
-
+  }, [])
+  useEffect(() => {
     const getUserData = async(email) => {
       try {
         let response = await fetch("/api/editProfile",
@@ -57,9 +58,12 @@ export default function Home() {
       }
     }
     if(session && session.user.email){
+      setName(session.user.image);
+      setimgUrl(session.user.image);
       getUserData(session.user.email);
     }
-  }, [])
+  }, [session])
+  
   return (
     <>
       <div className="min-h-screen">
@@ -77,8 +81,7 @@ export default function Home() {
                     >
                       <img
                         src={imgUrl}
-                        width={30}
-                        className="rounded-full"
+                        className="rounded-full object-cover object-center h-[30px] w-[30px]"
                         alt="User Profile"
                       />
                       <span className="hidden md:inline">{name}</span>
@@ -186,7 +189,7 @@ export default function Home() {
             ))}
           </div>
         </section>
-        <FaArrowUp onClick={scrollToTop} className='text-3xl cursor-pointer text-white m-4 fixed bottom-0 right-0 hover:scale-105' />
+        <FaArrowUp onClick={scrollToTop} className='text-3xl cursor-pointer text-white m-4 fixed bottom-0 z-[50] right-0 hover:scale-105' />
       </div >
 
     </>

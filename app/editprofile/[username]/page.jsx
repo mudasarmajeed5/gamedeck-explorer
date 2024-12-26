@@ -15,10 +15,18 @@ const UpdateProfile = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [isdisabled, setisDisabled] = useState(false);
   const { data: session, status } = useSession();
-  const [Imgurl, setImgurl] = useState(`${session?.user?.image}`);
+  const [Imgurl, setImgurl] = useState(session?.user?.image || '');
   const [name, setName] = useState("");
 
   const updateProfilePic = async() => {
+    if (name.length <5){
+      toast.error("Please enter a valid name");
+      return;
+    }
+    if(!Imgurl.includes('http')){
+      toast.error('Please enter a valid url');
+      return;
+    }
     setisDisabled(true);
     if(!session){
       alert("Make sure you are logged into the App!");
