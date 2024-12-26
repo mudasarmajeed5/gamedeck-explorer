@@ -69,9 +69,9 @@ const Login = () => {
           </button>
         </div>
         <div className="orline2">
-          <div className="Border2"></div>
+          <div className="Border"></div>
           <h3>or</h3>
-          <div className="Border2"></div>
+          <div className="Border"></div>
         </div>
         <h4 className="text-gray-500">Dont Have an Account <Link className="text-white" href={"/signup"}>Signup!</Link> </h4>
       </div>

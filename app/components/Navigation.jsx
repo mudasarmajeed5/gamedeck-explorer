@@ -4,8 +4,7 @@ import Link from "next/link";
 import { FaHeart } from "react-icons/fa";
 import { FaStore } from "react-icons/fa";
 import { FaWallet } from "react-icons/fa6";
-import { signOut, signIn, useSession } from "next-auth/react";
-import { FaRegUserCircle } from "react-icons/fa";
+import { signOut, useSession } from "next-auth/react";
 import { CiLogout } from "react-icons/ci";
 import { usePathname } from "next/navigation";
 const Navigation = () => {

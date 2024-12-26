@@ -25,6 +25,7 @@ const handler = NextAuth({
                             name:user.name,
                             email: user.email,
                             username: user.email.split('@')[0],
+                            profilePic:user.image,
                         });
                     }
                     return true;

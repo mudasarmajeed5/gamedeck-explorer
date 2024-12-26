@@ -77,9 +77,9 @@ const Signup = () => {
           </button>
         </div>
         <div className="orline2">
-          <div className="Border2"></div>
+          <div className="Border"></div>
           <h3>or</h3>
-          <div className="Border2"></div>
+          <div className="Border"></div>
         </div>
         <h4 className="text-gray-500">Already Have an Account <Link className="text-white" href={"/login"}>Login!</Link> </h4>
       </div>

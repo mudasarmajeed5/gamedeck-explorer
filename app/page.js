@@ -17,6 +17,8 @@ export default function Home() {
   const [fetchedData, setfetchedData] = useState([]);
   const [fetchedData2, setfetchedData2] = useState([]);
   const [homeData, setHomeData] = useState([]);
+  const [name,setName] = useState('');
+  const [imgUrl,setimgUrl] = useState(null);
   const scrollToTop = () => {
     window.scrollTo(0, 0);
   }
@@ -33,6 +35,30 @@ export default function Home() {
       setfetchedData2(receivedData.results.slice(14, 22));
     }
     getSliderData();
+
+    const getUserData = async(email) => {
+      try {
+        let response = await fetch("/api/editProfile",
+          {
+            method:'GET',
+            headers:{
+              'Content-Type':'application/json',
+              'email':email,
+            },
+          }
+        );
+        if(response.ok){
+          const data = await response.json();
+          setName(data.data.name);
+          setimgUrl(data.data.profilePic);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if(session && session.user.email){
+      getUserData(session.user.email);
+    }
   }, [])
   return (
     <>
@@ -41,7 +67,7 @@ export default function Home() {
         <div className="w-11/12 md:w-10/12 mx-auto flex top-2 z-[10] rounded-xl px-2 bg-white bg-opacity-10 text-white border border-white border-opacity-10 justify-between md:justify-center items-center p-1 gap-2">
           <div className="text-sm md:text-xl rounded-full w-full font-semibold">Game Deck: Your Personal Space</div>
           <div className="flex min-w-fit gap-4 justify-end items-end text-xl">
-            <div className="signIn text-sm border border-white rounded-xl px-2 py-1 cursor-pointer transition-all flex gap-2 items-center">
+            <div className="signIn text-sm border border-white bg-opacity-20 bg-white rounded-xl px-2 py-1 cursor-pointer transition-all flex gap-2 items-center">
               {session ? (
                 <>
                   <div>
@@ -50,12 +76,12 @@ export default function Home() {
                       href={`/editprofile/${session.user.email.split("@")[0]}`}
                     >
                       <img
-                        src={session.user.image}
+                        src={imgUrl}
                         width={30}
                         className="rounded-full"
                         alt="User Profile"
                       />
-                      <span className="hidden md:inline">{session.user.name}</span>
+                      <span className="hidden md:inline">{name}</span>
                     </Link>
                   </div>
                 </>
@@ -78,7 +104,7 @@ export default function Home() {
         <div className="mt-4"></div>
         <div className="bg-opacity-70">
           <div className="slider w-[90vw] h-[30vh] md:h-[70vh] md:w-[60vw] py-2 mx-auto">
-            <div className="text-white flex items-center flex-col md:flex-row hidden mb-5 gap-2 justify-center">
+            <div className="text-white items-center flex-col md:flex-row hidden mb-5 gap-2 justify-center">
               <div className="flex justify-center items-center gap-2">
                 <TbBlur className="text-white"/>
                 <span>Background Blur </span><input onChange={(e) => setBlur(e.target.value)} min={0} defaultValue={blur} max={10} type="range" />
