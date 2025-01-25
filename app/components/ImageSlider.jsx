@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import Tilt from 'react-parallax-tilt';
 import { waveform } from 'ldrs';
 if (typeof window !== "undefined") {
     // Ensure this runs only in the browser

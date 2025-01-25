@@ -1,32 +1,51 @@
 "use client";
 import ImageSlider from "./components/ImageSlider";
-import { FaArrowUp } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { FaRegUserCircle } from "react-icons/fa";
 import GameCard from "./components/GameCard";
 import { TbBlur } from "react-icons/tb";
+import { Button } from "@/components/ui/button";
 import MultiImageSlider from "./components/MultiImageSlider";
 import GameComponent from "./components/HomeGameComp";
-import { CiBrightnessUp } from "react-icons/ci";
+import { ArrowUp, Sun } from "lucide-react";
 export default function Home() {
-  const { data: session } = useSession();
-  const [blur, setBlur] = useState(0);
-  const [backgroundOpacity, setbackgroundOpacity] = useState(0);
+  const { data: session, status } = useSession();
+  const [backgroundIndex, setBackgroundIndex] = useState(0);
+  const [blur, setBlur] = useState(1);
+  const [backgroundOpacity, setbackgroundOpacity] = useState(7);
   const [fetchedData, setfetchedData] = useState([]);
   const [fetchedData2, setfetchedData2] = useState([]);
   const [homeData, setHomeData] = useState([]);
-  const [name,setName] = useState('');
-  const [imgUrl,setimgUrl] = useState(null);
-  const scrollToTop = () => {
-    window.scrollTo(0, 0);
-  }
+  const [name, setName] = useState('');
+  const [imgUrl, setImgUrl] = useState('');
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const username = localStorage.getItem("name");
+      const imgLink = localStorage.getItem("imgLink");
+      const savedBackgroundIdx = localStorage.getItem("backgroundIdx");
+
+      setName(username ? JSON.parse(username) : '');
+      setImgUrl(imgLink ? JSON.parse(imgLink) : '');
+      setBackgroundIndex(savedBackgroundIdx ? JSON.parse(savedBackgroundIdx) : 0);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('backgroundIdx', JSON.stringify(backgroundIndex));
+  }, [backgroundIndex]);
+
+  const updateBackgroundIndex = (newIndex) => {
+    setBackgroundIndex(newIndex);
+  };
   useEffect(() => {
     const getSliderData = async () => {
       const apiKey = "5773afd254c846a699ffc9ec3cb8cedd";
       let response = await fetch(`https://api.rawg.io/api/games?key=${apiKey}`)
       if (!response.ok) {
+        toast.error("Failed to Fetch Data, Make sure You're connected to Internet")
         throw new Error("Failed to fetch Data!");
       }
       const receivedData = await response.json();
@@ -37,42 +56,42 @@ export default function Home() {
     getSliderData();
   }, [])
   useEffect(() => {
-    const getUserData = async(email) => {
+    const getUserData = async (email) => {
       try {
         let response = await fetch("/api/editProfile",
           {
-            method:'GET',
-            headers:{
-              'Content-Type':'application/json',
-              'email':email,
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'email': email,
             },
           }
         );
-        if(response.ok){
-          const data = await response.json();
-          setName(data.data.name);
-          setimgUrl(data.data.profilePic);
+        if (response.ok) {
+          const user = await response.json();
+          setName(user.data.name);
+          setImgUrl(user.data.profilePic);
+          localStorage.setItem('imgLink', JSON.stringify(user.data.profilePic));
+          localStorage.setItem('name', JSON.stringify(user.data.name))
         }
       } catch (error) {
         console.log(error);
       }
     }
-    if(session && session.user.email){
-      setName(session.user.image);
-      setimgUrl(session.user.image);
+    if (status == "authenticated") {
       getUserData(session.user.email);
     }
   }, [session])
-  
   return (
     <>
+      <img src={homeData[backgroundIndex]?.background_image} className="fixed top-0 left-0 -z-10 w-full h-full object-center object-cover" alt="" />
       <div className="min-h-screen">
         <div className="mb-4"></div>
         <div className="w-11/12 md:w-10/12 mx-auto flex top-2 z-[10] rounded-xl px-2 bg-white bg-opacity-10 text-white border border-white border-opacity-10 justify-between md:justify-center items-center p-1 gap-2">
           <div className="text-sm md:text-xl rounded-full w-full font-semibold">Game Deck: Your Personal Space</div>
           <div className="flex min-w-fit gap-4 justify-end items-end text-xl">
-            <div className="signIn text-sm border border-white bg-opacity-20 bg-white rounded-xl px-2 py-1 cursor-pointer transition-all flex gap-2 items-center">
-              {session ? (
+            <div className="signIn text-sm bg-opacity-20 bg-white rounded-xl px-2 py-1 cursor-pointer transition-all flex gap-2 items-center">
+              {session && session.user && session.user.name ? (
                 <>
                   <div>
                     <Link
@@ -80,11 +99,12 @@ export default function Home() {
                       href={`/editprofile/${session.user.email.split("@")[0]}`}
                     >
                       <img
-                        src={imgUrl}
+                        src={imgUrl ? imgUrl : null}
+                        onError={(e) => (e.target.src = <FaUser />)}
                         className="rounded-full object-cover object-center h-[30px] w-[30px]"
                         alt="User Profile"
                       />
-                      <span className="hidden md:inline">{name}</span>
+                      <span className="hidden md:inline">{name ? name : ''}</span>
                     </Link>
                   </div>
                 </>
@@ -107,14 +127,35 @@ export default function Home() {
         <div className="mt-4"></div>
         <div className="bg-opacity-70">
           <div className="slider w-[90vw] h-[30vh] md:h-[70vh] md:w-[60vw] py-2 mx-auto">
-            <div className="text-white items-center flex-col md:flex-row hidden mb-5 gap-2 justify-center">
-              <div className="flex justify-center items-center gap-2">
-                <TbBlur className="text-white"/>
-                <span>Background Blur </span><input onChange={(e) => setBlur(e.target.value)} min={0} defaultValue={blur} max={10} type="range" />
+            <div className="text-white items-center flex flex-col md:flex-row mb-5 gap-2 justify-between">
+              <div className="flex gap-2">
+                <div className="flex justify-center items-center gap-2">
+                  <TbBlur className="text-white" />
+                  <span>Blur</span><input onChange={(e) => setBlur(e.target.value)} min={0} defaultValue={blur} max={10} type="range" />
+                </div>
+                <div className="flex justify-center items-center gap-2">
+                  <Sun className="w-4 h-4" />
+                  <span>OverLay</span><input onChange={(e) => setbackgroundOpacity(e.target.value)} min={0} defaultValue={blur} max={10} type="range" />
+                </div>
               </div>
-              <div className="flex justify-center items-center gap-2">
-                <CiBrightnessUp/>
-                <span>OverLay Brightness </span><input onChange={(e) => setbackgroundOpacity(e.target.value)} min={0} defaultValue={blur} max={10} type="range" />
+              <div className="flex gap-2">
+                <Button
+                  onClick={() => setBackgroundIndex((prev) => Math.max(prev - 1, 0))}
+                  variant="default"
+                  className="cursor-pointer text-sm font-normal"
+                  disabled={backgroundIndex === 0} // Disable if already at 0
+                >
+                  Prev Background
+                </Button>
+                <Button
+                  onClick={() => setBackgroundIndex((prev) => Math.min(prev + 1, 12))}
+                  variant="default"
+                  className="cursor-pointer text-sm font-normal"
+                  disabled={backgroundIndex === 12} // Disable if already at 12
+                >
+                  Next Background
+                </Button>
+
               </div>
             </div>
             <ImageSlider slides={fetchedData} blur={blur} backgroundOpacity={backgroundOpacity} />
@@ -189,7 +230,7 @@ export default function Home() {
             ))}
           </div>
         </section>
-        <FaArrowUp onClick={scrollToTop} className='text-3xl cursor-pointer text-white m-4 fixed bottom-0 z-[50] right-0 hover:scale-105' />
+        <ArrowUp onClick={() => window.scrollTo(0, 0)} className="w-8 h-8 border-2 font-bold rounded-full p-0.5 cursor-pointer text-white m-4 fixed bottom-0 right-0 z-[50] hover:scale-105" />
       </div >
 
     </>

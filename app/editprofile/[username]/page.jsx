@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 import { waveform } from "ldrs";
 import { motion } from "motion/react";
 import { signOut } from "next-auth/react";
+import DeleteConfirmation from "./delete-profile-popup";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 if (typeof window !== "undefined") {
   waveform.register();
 }
@@ -18,26 +20,26 @@ const UpdateProfile = () => {
   const [Imgurl, setImgurl] = useState(session?.user?.image || '');
   const [name, setName] = useState("");
 
-  const updateProfilePic = async() => {
-    if (name.length <5){
+  const updateProfilePic = async () => {
+    if (name.length < 5) {
       toast.error("Please enter a valid name");
       return;
     }
-    if(!Imgurl.includes('http')){
+    if (!Imgurl.includes('http')) {
       toast.error('Please enter a valid url');
       return;
     }
     setisDisabled(true);
-    if(!session){
+    if (!session) {
       alert("Make sure you are logged into the App!");
       return;
     }
     try {
       const response = await fetch('/api/editProfile',
         {
-          method:'POST',
-          headers:{
-            'Content-Type':'application/json',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             profilePic: Imgurl,
@@ -46,39 +48,64 @@ const UpdateProfile = () => {
           }),
         },
       );
-      if(response.ok){
+      if (response.ok) {
         toast.success("Profile updated!")
         setisDisabled(false);
       }
 
-      else{
+      else {
         console.error(response.statusText);
       }
     } catch (error) {
       console.log(error);
     }
   }
-  
+  const deleteProfile = async () => {
+    if (status == 'authenticated') {
+      const response = await fetch('/api/editProfile',
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'email': session?.user?.email
+          }
+        }
+      )
+      if (response.ok) {
+        toast.error('Profile Deleted')
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem("name");
+          localStorage.removeItem("imgLink");
+        }
+        
+        router.push('/')
+        signOut();
+      }
+      if(!response.ok){
+        toast.error("Error, Please try again later.")
+      }
+    }
+  }
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push('/');
     }
-    if(status == 'authenticated'){
+    if (status == 'authenticated') {
       setImgurl(session.user.image);
       setName(session.user.name);
     }
-    const getUserData = async(email) => {
+    const getUserData = async (email) => {
       try {
         let response = await fetch("/api/editProfile",
           {
-            method:'GET',
-            headers:{
-              'Content-Type':'application/json',
-              'email':email,
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'email': email,
             },
           }
         );
-        if(response.ok){
+        if (response.ok) {
           const data = await response.json();
           setName(data.data.name);
           setImgurl(data.data.profilePic);
@@ -87,7 +114,7 @@ const UpdateProfile = () => {
         console.log(error);
       }
     }
-    if(session && session.user.email){
+    if (session && session.user.email) {
       getUserData(session.user.email);
     }
   }, [status, router]);
@@ -102,56 +129,62 @@ const UpdateProfile = () => {
         ></l-waveform>
       </div>
     );
-    
   }
+  const deleteFavorites = () => {
+    localStorage.removeItem('favoriteGames');    
+    toast.error('Favorites deleted');
+  }
+  
   return (
     <>
       <div className='text-white min-h-screen'>
         <div className="bg-black bg-opacity-70 w-full h-full absolute top-0 left-0 z-[-9]"></div>
         <div className="container md:h-screen relative mt-[10vh] w-[100vw] md:w-[85vw] md:mt-0 flex-col flex gap-8 justify-start md:justify-center items-center">
           <div className="border p-6 rounded-xl">
-          <motion.div
-            drag
-            dragElastic={0.5} 
-            onDragStart={() => setIsDragging(true)} 
-            onDragEnd={() => setIsDragging(false)}
-            animate={!isDragging ? { x: 0, y: 0 } : undefined} 
-            transition={{ type: "spring", stiffness: 200 }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            className="right flex items-center flex-col gap-4 cursor-pointer"
-          >
-            <div className="w-full h-full flex items-center justify-center pointer-events-none">
-              <img
-                className="border object-cover object-center border-white rounded-full pointer-events-none w-[150px] h-[150px]" // Disable interaction with the image
-                src={Imgurl || null}
-                alt={session?.user?.name || "User"}
-              />
+            <motion.div
+              drag
+              dragElastic={0.5}
+              onDragStart={() => setIsDragging(true)}
+              onDragEnd={() => setIsDragging(false)}
+              animate={!isDragging ? { x: 0, y: 0 } : undefined}
+              transition={{ type: "spring", stiffness: 200 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="right flex items-center flex-col gap-4 cursor-pointer"
+            >
+              <div className="w-full h-full flex items-center justify-center pointer-events-none">
+                <img
+                  className="border object-cover object-center border-white rounded-full pointer-events-none w-[150px] h-[150px]" // Disable interaction with the image
+                  src={Imgurl || null}
+                  alt={session?.user?.name || "User"}
+                />
+              </div>
+            </motion.div>
+            <div className="left">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="name">Change your name: </label>
+                <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="bg-transparent rounded-md border-2 focus:outline-none border-transparent border-b-white" />
+              </div>
+              <div>Email: {session?.user?.email}</div>
+              <div className="flex flex-col gap-2 mt-4">
+                <div className="text-md">Update Profile Picture</div>
+                <input className="bg-transparent border-b-2 focus:outline-none px-2 py-1" placeholder="Enter New Profile Link" type="text" onChange={(e) => setImgurl(e.target.value)} value={Imgurl} />
+              </div>
+              <div className="flex flex-col gap-2 mt-4">
+                <div className="text-md">Username</div>
+                <input disabled className="bg-transparent border-b-2 focus:outline-none text-gray-300 px-2 py-1" placeholder="Enter a username" type="text" value={session?.user?.email.split('@')[0]} />
+              </div>
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                <button disabled={isdisabled} onClick={updateProfilePic} className="px-2 py-1 rounded-md bg-blue-700 disabled:bg-blue-900">Update Profile</button>
+                <button onClick={() => signOut()} className="px-2 py-1 rounded-md bg-blue-700">Logout</button>
+                <Button variant="destructive" onClick={deleteFavorites} className="px-2 py-1 rounded-md bg-red-600 text-white">Delete Favorites</Button>
+                <div className="rounded-md flex justify-center items-center bg-red-700">
+                  <DeleteConfirmation deleteProfile={deleteProfile} />  
+                </div>
+              </div>
+              <div>
+              </div>
             </div>
-          </motion.div>
-          <div className="left">
-            <div className="flex flex-col gap-2">
-            <label htmlFor="name">Change your name: </label>
-            <input type="text" value={name} onChange={(e)=>setName(e.target.value)} className="bg-transparent rounded-md border-2 focus:outline-none border-transparent border-b-white" />
-            </div>
-            <div>Email: {session?.user?.email}</div>
-            <div className="flex flex-col gap-2 mt-4">
-              <div className="text-md">Update Profile Picture</div>
-              <input className="bg-transparent border-b-2 focus:outline-none px-2 py-1" placeholder="Enter New Profile Link" type="text" onChange={(e)=>setImgurl(e.target.value)} value={Imgurl} />
-            </div>
-            <div className="flex flex-col gap-2 mt-4">
-              <div className="text-md">Username</div>
-              <input disabled className="bg-transparent border-b-2 focus:outline-none text-gray-300 px-2 py-1" placeholder="Enter a username" type="text" value={session?.user?.email.split('@')[0]} />
-            </div>
-            <div className="grid grid-cols-2 gap-4 mt-4">
-              <button disabled={isdisabled} onClick={updateProfilePic} className="px-2 py-1 rounded-md bg-blue-700 disabled:bg-blue-900">Update Profile</button>
-              <button  onClick={()=>signOut()} className="px-2 py-1 rounded-md bg-blue-700">Logout</button>
-              <button className="px-2 py-1 rounded-md bg-red-600 text-white">Delete Favorites</button>
-              <button className="px-2 py-1 rounded-md bg-red-700">Delete Account</button>
-            </div>
-            <div>
-            </div>
-          </div>
           </div>
 
         </div>

@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
               <Navigation />
             </div>
             <div className="md:w-[85vw] w-full">
-              <Toaster />
+              <Toaster richColors/>
               <div>
                 {children}
                 <Footer/>

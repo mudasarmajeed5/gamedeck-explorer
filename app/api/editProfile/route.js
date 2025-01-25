@@ -40,3 +40,16 @@ export async function GET(request){
         console.error(error);
     }
 }
+export async function DELETE(request){
+    await connectDB();
+    try {
+        const email = request.headers.get('email');
+        const user = await User.findOneAndDelete({email});
+        if(!user){
+            return NextResponse.json({message:'User not found',status:404});
+        }
+    } catch (error) {
+        console.error(error)
+    }
+    return NextResponse.json({message:"Profile Deleted",status:200})
+}
