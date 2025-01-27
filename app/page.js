@@ -27,11 +27,20 @@ export default function Home() {
       const imgLink = localStorage.getItem("imgLink");
       const savedBackgroundIdx = localStorage.getItem("backgroundIdx");
 
-      setName(username ? JSON.parse(username) : '');
-      setImgUrl(imgLink ? JSON.parse(imgLink) : '');
-      setBackgroundIndex(savedBackgroundIdx ? JSON.parse(savedBackgroundIdx) : 0);
+      const safeParse = (value, fallback) => {
+        try {
+          return value ? JSON.parse(value) : fallback;
+        } catch {
+          return fallback;
+        }
+      };
+
+      setName(safeParse(username, ''));
+      setImgUrl(safeParse(imgLink, ''));
+      setBackgroundIndex(safeParse(savedBackgroundIdx, 0));
     }
   }, []);
+
 
   useEffect(() => {
     localStorage.setItem('backgroundIdx', JSON.stringify(backgroundIndex));
